@@ -16,7 +16,8 @@
                     <p>{{ $product->description }}</p>    
                 </li>
                 <li class="list-group-item bg-light">Stock: {{ $product->stock }}</li>
-                <li class="list-group-item bg-light">Rp {{ number_format( $product->price, 0, '.', ',' ) }}</li>
+                <li class="list-group-item bg-light">Weight: {{ $product->weight }} Gram</li>
+                <li class="list-group-item bg-light">Price: Rp {{ number_format( $product->price, 0, '.', ',' ) }}</li>
             </ul>
         </div>
     </div>

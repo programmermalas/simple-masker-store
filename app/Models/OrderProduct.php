@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class OrderProduct extends Model
 {
     use SoftDeletes;
 
@@ -15,11 +15,11 @@ class Order extends Model
 
     public $incrementing = false;
 
-    public function orderProduct() {
-        return $this->hasMany('App\Models\OrderProduct');
+    public function order() {
+        return $this->belongsTo('App\Models\Order');
     }
 
-    public function orderConfirmation() {
-        return $this->hasOne('App\Models\OrderConfirm');
+    public function product() {
+        return $this->belongsTo('App\Models\Product');
     }
 }

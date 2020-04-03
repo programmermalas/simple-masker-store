@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,13 @@ Route::post('/product/{product}', function ( Request $request, $product ) {
     $product    = App\Models\Product::where( 'slug', $product )->first();
 
     \Cart::add(array(
-        'id' => $product->id,
-        'name' => $product->title,
-        'price' => $product->price,
-        'quantity' => $request->quantity,
+        'id'            => $product->id,
+        'name'          => $product->title,
+        'price'         => $product->price,
+        'quantity'      => $request->quantity,
+        'attributes'    => [
+            'weight'    => $product->weight
+        ]
     ));
 
     return redirect()->back()->with('success', 'Item added to cart');
@@ -42,7 +46,13 @@ Route::post('/product/{product}', function ( Request $request, $product ) {
 Route::get('/cart', function () {
     $carts  = \Cart::getContent();
 
-    return view('cart', compact('carts'));
+    return view('cart', compact('carts', 'weight'));
+});
+
+Route::get('/cart/{id}/delete', function ( $id ) {
+    $carts  = \Cart::remove( $id );
+
+    return redirect()->back()->with('warning', 'Item removed in cart');
 });
 
 Route::post('/cart', function ( Request $request ) {
@@ -59,11 +69,51 @@ Route::post('/cart', function ( Request $request ) {
 });
 
 Route::get('/checkout', function () {
-    return view('checkout');
+    $carts  = \Cart::getContent();
+    $weight = 0;
+
+    foreach ( $carts as $cart ) {
+        $weight += $cart->attributes['weight'] * $cart->quantity;
+    }
+
+    return view('checkout', compact('weight'));
 });
 
-Route::get('/order', function () {
-    return view('order');
+Route::post('/order', function ( Request $request ) {
+    $request->validate([
+        'first_name'    => 'required|max:25',
+        'last_name'     => 'required|max:25',
+        'province'      => 'required',
+        'city'          => 'required',
+        'street'        => 'required|max:100',
+        'postcode'      => 'required|max:10',
+        'phone'         => 'required|max:15',
+        'email'         => 'required|email'
+    ]);
+
+    $count  = App\Models\Order::withTrashed()->count();
+    $invoice    = Carbon\Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+
+    $order = App\Models\Orders::create([
+        'id'            => Str::uuid(),
+        'invoice'       => $invoice,
+        'first_name'    => $request->first_name,
+        'last_name'     => $request->last_name,
+        'province_id'   => $request->province_id,
+        'city_id'       => $request->city_id,
+        'street'        => $request->street,
+        'postcode'      => $request->postcode,
+        'phone'         => $request->phone,
+        'email'         => $request->email,
+    ]);
+
+    $items  = \Cart::getContent();
+
+    foreach ( $items as $item ) {
+
+    }
+
+    return view('order', compact('order'));
 });
 
 Auth::routes([

@@ -8,7 +8,7 @@
 
     <div class="row pt-3">
         <div class="col-8">
-            <form action="{{ url('/cart') }}" method="post">
+            <form action="{{ url('/cart') }}" method="post" id="cart">
                 @csrf
                 
                 <table class="table">
@@ -18,6 +18,7 @@
                             <th scope="col">Product</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
 
@@ -34,13 +35,18 @@
                                 <input name="ids[]" type="hidden"value={{ $cart->id }}>
                                 <input name="quantities[]" type="number" name="form-control" id="quantity" min="100" value="{{ $cart->quantity }}" step="100">
                             </td>
+                            <td>
+                                <a href="{{ url( "/cart/{$cart->id}" ) }}" class="btn btn-sm btn-danger rounded-circle">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-secondary">Update cart</button>
+                    <button type="submit" class="btn btn-secondary" form="cart">Update cart</button>
                 </div>
             </form>
         </div>

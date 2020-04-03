@@ -17,6 +17,9 @@
                 </thead>
 
                 <tbody>
+                    @foreach ($collection as $item)
+                        
+                    @endforeach
                     <tr>
                         <th scope="row">1</th>
                         <td>Title</td>

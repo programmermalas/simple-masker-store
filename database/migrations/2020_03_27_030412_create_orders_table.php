@@ -16,10 +16,15 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->char('invoice', 100);
-            $table->char('name', 100);
-            $table->mediumText('address');
+            $table->char('first_name', 25);
+            $table->char('last_name', 25);
+            $table->integer('province_id');
+            $table->integer('city_id');
+            $table->string('street', 100);
+            $table->char('postcode', 10);
             $table->char('phone', 15);
-            $table->char('resi', 30);
+            $table->string('email', 100);
+            $table->char('resi', 50)->nullable();
             $table->enum('status', ['waiting', 'paid', 'delivered', 'canceled']);
             $table->softDeletes();
             $table->timestamps();

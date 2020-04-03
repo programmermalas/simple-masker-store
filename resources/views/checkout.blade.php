@@ -2,67 +2,123 @@
 
 @section('content')
 <div class="container">
+    <div class="pt-3">
+        @include('partials._alerts')
+    </div>
+
     <div class="row pt-3">
         <div class="col-8">
             <h5>Billing & shipping</h5>
-            <form action="#" method="post">
+
+            <form action="{{ url('/order') }}" method="post" id="order">
+                @csrf
+                
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" aria-describedby="firstName">
+
+                            <input name="first_name" type="text" class="form-control @if ($errors->has('first_name')) is-invalid @endif" id="firstName" aria-describedby="firstName" value="{{ old('first_name') }}">
+
+                            @if ($errors->has('first_name'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('first_name')}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" aria-describedby="lastName">
+
+                            <input name="last_name" type="text" class="form-control @if ($errors->has('last_name')) is-invalid @endif" id="lastName" aria-describedby="lastName" value="{{ old('last_name') }}">
+
+                            @if ($errors->has('last_name'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('last_name')}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="province">Province</label>
-                    <select class="custom-select" id="province">
+
+                    <select name="province" class="custom-select @if ($errors->has('province')) is-invalid @endif" id="province">
                         <option>Select Province</option>
                     </select>
+
+                    @if ($errors->has('province'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('province')}}
+                        </div>
+                    @endif
                 </div>
                 
                 <div class="form-group">
                     <label for="city">City</label>
-                    <select class="custom-select" id="city">
+
+                    <select name="city" class="custom-select @if ($errors->has('city')) is-invalid @endif" id="city">
                         <option>Select City</option>
                     </select>
-                </div>
 
-                <div class="form-group">
-                    <label for="district">District</label>
-                    <select class="custom-select" id="district">
-                        <option>Select District</option>
-                    </select>
+                    @if ($errors->has('city'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('city')}}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group">
                     <label for="street">Street Address</label>
-                    <input type="text" class="form-control" id="street" aria-describedby="street">
+
+                    <input name="street" type="text" class="form-control @if ($errors->has('street')) is-invalid @endif" id="street" aria-describedby="street" value="{{ old('street') }}">
+
+                    @if ($errors->has('street'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('street')}}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group">
                     <label for="postcode">Postcode / ZIP</label>
-                    <input type="text" class="form-control" id="postcode" aria-describedby="postcode">
+
+                    <input name="postcode" type="text" class="form-control @if ($errors->has('postcode')) is-invalid @endif" id="postcode" aria-describedby="postcode" value="{{ old('postcode') }}">
+
+                    @if ($errors->has('postcode'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('postcode')}}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" aria-describedby="phone">
+
+                            <input name="phone" type="text" class="form-control @if ($errors->has('phone')) is-invalid @endif" id="phone" aria-describedby="phone" value="{{ old('phone') }}">
+
+                            @if ($errors->has('phone'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('phone')}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" aria-describedby="email">
+
+                            <input name="email" type="email" class="form-control @if ($errors->has('email')) is-invalid @endif" id="email" aria-describedby="email" value="{{ old('email') }}">
+
+                            @if ($errors->has('email'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('email')}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -81,23 +137,75 @@
                 <tbody>
                     <tr>
                         <td>Subtotal</td>
-                        <td>Rp 37,000</td>
+                        <td>Rp {{ number_format( \Cart::getSubTotal(), 0, '.', ',' ) }}</td>
                     </tr>
+
+                    <tr>
+                        <td>Weight</td>
+                        <td>Rp <span id="weight">{{ $weight }}</span></td>
+                    </tr>
+
                     <tr>
                         <td>Shipping</td>
-                        <td>Rp 5,000</td>
+                        <td>Rp <span id="shipping"></span></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td>Total</td>
-                        <td>Rp 42,000</td>
+                        <td>Rp <span id="total">{{ \Cart::getTotal() }}</span></td>
                     </tr>
                 </tfoot>
             </table>
 
-            <button type="submit" class="btn btn-secondary d-block w-100">Pay</button>
+            <button type="submit" class="btn btn-secondary d-block w-100" form="order">Pay</button>
         </div>
     </div>
 </div>
+
+<script>
+    $('select[name="city"]').prop('disabled', true);
+    $('#shipping').html(0);
+    let total = $('#total').html();
+    $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
+
+    let provinces = [];
+
+    $.get('/api/provinces', function ( data ) {
+        $('select[name="province"]').empty().append( new Option( 'Select Province', null ) );
+
+        $.map( data.rajaongkir.results, function ( value, index ) {
+            $('select[name="province"]').append( new Option( value.province, value.province_id ) );
+        });
+    });
+
+    $('select[name="province"]').on('click', function () {
+        $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
+
+        if ( $(this).val() !== null ) {
+            $.get('/api/provinces/' + $(this).val(), function ( data ) {
+                $('select[name="city"]').prop('disabled', true);
+
+                if ( data.rajaongkir.results ) {
+                    $('select[name="city"]').prop('disabled', false);
+
+                    $.map( data.rajaongkir.results, function ( value, index ) {
+                        $('select[name="city"]').append( new Option( value.type + ' ' + value.city_name, value.city_id ) );
+                    });
+                }
+            });
+        }
+    });
+
+    $('select[name="city"]').on('click', function () {
+        $.get('/api/cost/' + $(this).val() + '/' + $('#weight').html(), function ( data ) {
+            $('#shipping').html(0);
+
+            if (data.rajaongkir.results) {
+                $('#shipping').html( new Intl.NumberFormat('ja-JP').format( data.rajaongkir.results[0].costs[1].cost[0].value ) );
+                $('#total').html( new Intl.NumberFormat('ja-JP').format( parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value ) );
+            }
+        });
+    });
+</script>
 @endsection

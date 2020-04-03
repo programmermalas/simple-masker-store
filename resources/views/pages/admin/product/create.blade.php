@@ -70,6 +70,24 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="weight">Weight</label>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="weight">Gram</span>
+                                </div>
+
+                                <input name="weight" type="text" class="form-control @if ($errors->has('weight')) is-invalid @endif" value="{{ old('weight') }}" placeholder="5" aria-label="5" aria-describedby="weight">
+
+                                @if ($errors->has('weight'))
+                                    <div class="invalid-feedback">
+                                        {{$errors->first('weight')}}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="image">Image</label>
                             <input name="image" type="file" class="form-control-file @if ($errors->has('image')) is-invalid @endif" id="image">
 

@@ -19,14 +19,19 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item bg-light"><h5>{{ $product->title }}</h5></li>
+
                     <li class="list-group-item bg-light">
                         <p>{{ $product->description }}</p>    
                     </li>
+
                     <li class="list-group-item bg-light">Stock: {{ $product->stock }}</li>
+
                     <li class="list-group-item bg-light">Rp {{ number_format( $product->price, 0, '.', ',' ) }}</li>
+                    
                     <li class="list-group-item bg-light">
                         <div class="form-group mb-0 row">
                             <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+
                             <div class="col-sm-10">
                                 <input name="quantity" type="number" class="form-control @if ($errors->has('title')) is-invalid @endif" id="quantity" min="100" step="100" value="{{ old('title') ?? '100' }}">
 

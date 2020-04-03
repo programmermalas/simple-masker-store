@@ -63,6 +63,7 @@ class ProductController extends Controller
             'price'         => 'required|numeric',
             'stock'         => 'required|numeric',
             'description'   => 'required',
+            'weight'        => 'required',
             'image'         => 'required|mimes:jpeg,jpg'
         ]);
 
@@ -74,7 +75,8 @@ class ProductController extends Controller
                 'slug'          => Str::slug($request->title, '-'),
                 'price'         => $request->price,
                 'stock'         => $request->stock,
-                'description'   => $request->description
+                'description'   => $request->description,
+                'weight'        => $request->weight
             ]);
 
             $fileName   = $this->uploadImage( $request->file('image'), $product->title );
@@ -129,6 +131,7 @@ class ProductController extends Controller
             'price'         => 'required|numeric',
             'stock'         => 'required|numeric',
             'description'   => 'required',
+            'weight'        => 'required',
             'image'         => 'mimes:jpeg,jpg'
         ]);
 
@@ -140,7 +143,8 @@ class ProductController extends Controller
                 'slug'          => Str::slug($request->title, '-'),
                 'price'         => $request->price,
                 'stock'         => $request->stock,
-                'description'   => $request->description
+                'description'   => $request->description,
+                'weight'        => $request->weight
             ]);
 
             if ( $request->hasFile('image') ) {
