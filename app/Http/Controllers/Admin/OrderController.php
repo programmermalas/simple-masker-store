@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Auth;
 
-use App\Models\Admin\Order;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -78,7 +78,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'resi'      => 'required|max:30',
+            'resi'      => 'max:30',
             'status'    => 'required',
         ]);
 

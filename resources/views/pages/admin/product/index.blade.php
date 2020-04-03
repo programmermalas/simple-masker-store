@@ -19,14 +19,14 @@
                                 <input type="text" class="form-control" placeholder="Search Product" aria-label="Search Product" aria-describedby="button-search">
 
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-search">
+                                    <button class="btn btn-outline-secondary" type="submit" id="button-search">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
 
                             </div>
                             
-                            <a href="{{ route('admin.product.create') }}" class="ml-2 btn btn-primary">Add</a>
+                            <a href="{{ route('admin.product.create') }}" class="ml-2 btn btn-secondary">Add</a>
                         </form>
                     </div>
                 </div>
@@ -58,11 +58,11 @@
                                             @csrf
                                             @method('delete')
 
-                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-sm btn-primary rounded-circle">
+                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-sm btn-secondary rounded-circle">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         
-                                            <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-sm btn-primary rounded-circle">
+                                            <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-sm btn-secondary rounded-circle">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 

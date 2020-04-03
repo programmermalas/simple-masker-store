@@ -6,13 +6,13 @@
         @include('partials._alerts')
     </div>
 
-    <div class="row pt-3">
-        <div class="col-8">
-            <h5>Billing & shipping</h5>
+    <form action="{{ url('/order') }}" method="post" id="order">
+        @csrf
 
-            <form action="{{ url('/order') }}" method="post" id="order">
-                @csrf
-                
+        <div class="row pt-3">
+            <div class="col-8">
+                <h5>Billing & shipping</h5>
+
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -122,51 +122,52 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+
+            <div class="col-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Totals</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>Rp {{ number_format( \Cart::getSubTotal(), 0, '.', ',' ) }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Weight</td>
+                            <td>Rp <input type="hidden" name="weight" value="{{ $weight }}"><span id="weight">{{ $weight }}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Shipping</td>
+                            <td>Rp <input type="hidden" name="shipping"><span id="shipping"></span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>Rp <input type="hidden" name="total"><span id="total">{{ \Cart::getTotal() }}</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <button type="submit" class="btn btn-secondary d-block w-100">Pay</button>
+            </div>
         </div>
-
-        <div class="col-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Totals</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>Subtotal</td>
-                        <td>Rp {{ number_format( \Cart::getSubTotal(), 0, '.', ',' ) }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Weight</td>
-                        <td>Rp <span id="weight">{{ $weight }}</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Shipping</td>
-                        <td>Rp <span id="shipping"></span></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Total</td>
-                        <td>Rp <span id="total">{{ \Cart::getTotal() }}</span></td>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <button type="submit" class="btn btn-secondary d-block w-100" form="order">Pay</button>
-        </div>
-    </div>
+    </form>
 </div>
 
 <script>
     $('select[name="city"]').prop('disabled', true);
     $('#shipping').html(0);
     let total = $('#total').html();
+    $('input[name="total"]').val( total );
     $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
 
     let provinces = [];
@@ -179,7 +180,7 @@
         });
     });
 
-    $('select[name="province"]').on('click', function () {
+    $('select[name="province"]').change(function () {
         $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
 
         if ( $(this).val() !== null ) {
@@ -197,13 +198,18 @@
         }
     });
 
-    $('select[name="city"]').on('click', function () {
+    $('select[name="city"]').change(function () {
         $.get('/api/cost/' + $(this).val() + '/' + $('#weight').html(), function ( data ) {
             $('#shipping').html(0);
 
             if (data.rajaongkir.results) {
-                $('#shipping').html( new Intl.NumberFormat('ja-JP').format( data.rajaongkir.results[0].costs[1].cost[0].value ) );
-                $('#total').html( new Intl.NumberFormat('ja-JP').format( parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value ) );
+                let shipping = data.rajaongkir.results[0].costs[1].cost[0].value;
+                let totals = parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value;
+
+                $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
+                $('input[name="shipping"]').val( shipping );
+                $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
+                $('input[name="total"]').val( totals );
             }
         });
     });

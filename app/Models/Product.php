@@ -23,7 +23,7 @@ class Product extends Model
         return $this->hasOne('App\Models\ProductImage');
     }
 
-    public function orderProduct() {
+    public function orderProducts() {
         return $this->hasMany('App\Models\OrderProduct');
     }
 }

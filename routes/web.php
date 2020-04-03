@@ -88,29 +88,51 @@ Route::post('/order', function ( Request $request ) {
         'street'        => 'required|max:100',
         'postcode'      => 'required|max:10',
         'phone'         => 'required|max:15',
-        'email'         => 'required|email'
+        'email'         => 'required|email',
+        'shipping'      => 'required',
+        'weight'        => 'required',
+        'total'         => 'required'
     ]);
 
-    $count  = App\Models\Order::withTrashed()->count();
-    $invoice    = Carbon\Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+    try {
+        $count  = App\Models\Order::withTrashed()->count();
+        $invoice    = Carbon\Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+    
+        $order = App\Models\Order::create([
+            'id'            => Str::uuid(),
+            'invoice'       => $invoice,
+            'first_name'    => $request->first_name,
+            'last_name'     => $request->last_name,
+            'province_id'   => $request->province,
+            'city_id'       => $request->city,
+            'street'        => $request->street,
+            'postcode'      => $request->postcode,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
+        ]);
+    
+        App\Models\Bill::create([
+            'id'        => Str::uuid(),
+            'order_id'  => $order->id,
+            'shipping'  => $request->shipping,
+            'weight'    => $request->weight,
+            'total'     => $request->total
+        ]);
+    
+        $items  = \Cart::getContent();
+    
+        foreach ( $items as $item ) {
+            App\Models\OrderProduct::create([
+                'id'        => Str::uuid(),
+                'order_id'  => $order->id,
+                'product_id'=> $item->id,
+                'quantity'  => $item->quantity
+            ]);
+        }
 
-    $order = App\Models\Orders::create([
-        'id'            => Str::uuid(),
-        'invoice'       => $invoice,
-        'first_name'    => $request->first_name,
-        'last_name'     => $request->last_name,
-        'province_id'   => $request->province_id,
-        'city_id'       => $request->city_id,
-        'street'        => $request->street,
-        'postcode'      => $request->postcode,
-        'phone'         => $request->phone,
-        'email'         => $request->email,
-    ]);
-
-    $items  = \Cart::getContent();
-
-    foreach ( $items as $item ) {
-
+        $items  = \Cart::clear();
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', $e->getMessage());
     }
 
     return view('order', compact('order'));
@@ -128,7 +150,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('product', 'Admin\ProductController');
 
         Route::resource('order', 'Admin\OrderController')->except([
-            'store', 'destroy'
+            'create', 'store', 'destroy'
         ]);
     });
 });

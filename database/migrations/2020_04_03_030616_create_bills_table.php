@@ -14,7 +14,18 @@ class CreateBillsTable extends Migration
     public function up()
     {
         Schema::create('bills', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->priamry();
+
+            $table->uuid('order_id');
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+                ->onDelete('cascade');
+
+            $table->integer('shipping');
+            $table->double('weight', 8, 2);
+            $table->integer('total');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

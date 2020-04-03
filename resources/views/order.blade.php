@@ -17,16 +17,18 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($collection as $item)
-                        
-                    @endforeach
+                    @php
+                        $no = 0;
+                    @endphp
+                    @foreach ($order->orderProducts as $orderProduct)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Title</td>
-                        <td>Rp 37,000</td>
-                        <td>100</td>
-                        <td>Rp 37,000</td>
+                        <th scope="row">{{ ++$no }}</th>
+                        <td>{{ $orderProduct->product->title }}</td>
+                        <td>Rp {{ number_format( $orderProduct->product->price, 0, '.', ',' ) }}</td>
+                        <td>{{ $orderProduct->quantity }}</td>
+                        <td>{{ number_format( $orderProduct->quantity * $orderProduct->product->price, 0, '.', ',' ) }}</td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -35,12 +37,12 @@
             <p class="font-weight-bolder">Thank you. Your order has been received.</p>
                         
             <ul class="list-unstyled">
-                <li>Order number: 00001</li>
-                <li>Date: 01/01/2001</li>
-                <li>Payment method: BCA 0000-0000 a/n John Doe</li>
+                <li>Order number: {{ $order->invoice }}</li>
+                <li>Date: {{ $order->created_at->format('d/m/Y') }}</li>
+                <li>Payment method: Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International</li>
             </ul>
 
-            <a href="#" class="btn btn-secondary d-block w-100">Payment confirmation</a>
+            <a href="{{ url("/payment-confirmation") }}" class="btn btn-secondary d-block w-100">Payment confirmation</a>
         </div>
     </div>
 </div>

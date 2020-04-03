@@ -17,46 +17,57 @@
                                 <input type="text" class="form-control" placeholder="Search Order" aria-label="Search Order" aria-describedby="button-search">
     
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-search">
+                                    <button class="btn btn-outline-secondary" type="submit" id="button-search">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
-    
                             </div>
-                            
-                            <a href="#" class="ml-2 btn btn-primary">Add</a>
                         </form>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Stock</th>
-                                <th class="text-center" scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-sm btn-primary rounded-circle">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger rounded-circle">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Invoice</th>
+                                    <th scope="col">Buyer</th>
+                                    <th scope="col">Province</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Status</th>
+                                    <th class="text-center" scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $no = 0;
+                                @endphp
+                                @foreach( $orders as $order )
+                                <tr>
+                                    <th scope="row">{{ ++$no }}</th>
+                                    <td>{{ $order->invoice }}</td>
+                                    <td style="white-space: nowrap;">{{ $order->first_name . ' ' . $order->last_name }}</td>
+                                    <td style="white-space: nowrap;">{{ $order->province() }}</td>
+                                    <td>{{ $order->city() }}</td>
+                                    <td>{{ $order->orderProducts()->sum('quantity') }}</td>
+                                    <td>{{ $order->status }}</td>
+                                    <td class="text-center" style="white-space: nowrap;">
+                                        <a href="{{ route( 'admin.order.edit', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+
+                                        <a href="{{ route( 'admin.order.show', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
