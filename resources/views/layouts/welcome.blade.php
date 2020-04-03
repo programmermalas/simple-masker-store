@@ -39,6 +39,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Payment Confirmation</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Check your order</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -101,6 +105,9 @@
                         <ul class="list-unstyled">
                             <li>
                                 <a class="text-decoration-none text-reset" href="#">Payment Confirmation</a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none text-reset" href="#">Check your order</a>
                             </li>
                             <li>
                                 <a class="text-decoration-none text-reset" href="#">How to Order</a>

@@ -1,0 +1,165 @@
+@extends('layouts.welcome')
+
+@section('content')
+<div class="container">
+    <div class="pt-3">
+        @include('partials._alerts')
+    </div>
+
+    <form action="{{ url('/order') }}" method="post" id="order">
+        @csrf
+
+        <div class="row pt-3">
+            <div class="col-8">
+                <h5>Billing & shipping</h5>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+
+                            <input name="first_name" type="text" class="form-control @if ($errors->has('first_name')) is-invalid @endif" id="firstName" aria-describedby="firstName" value="{{ old('first_name') }}">
+
+                            @if ($errors->has('first_name'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('first_name')}}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+
+                            <input name="last_name" type="text" class="form-control @if ($errors->has('last_name')) is-invalid @endif" id="lastName" aria-describedby="lastName" value="{{ old('last_name') }}">
+
+                            @if ($errors->has('last_name'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('last_name')}}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="province">Province</label>
+
+                    <select name="province" class="custom-select @if ($errors->has('province')) is-invalid @endif" id="province">
+                        <option>Select Province</option>
+                    </select>
+
+                    @if ($errors->has('province'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('province')}}
+                        </div>
+                    @endif
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">City</label>
+
+                    <select name="city" class="custom-select @if ($errors->has('city')) is-invalid @endif" id="city">
+                        <option>Select City</option>
+                    </select>
+
+                    @if ($errors->has('city'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('city')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="street">Street Address</label>
+
+                    <input name="street" type="text" class="form-control @if ($errors->has('street')) is-invalid @endif" id="street" aria-describedby="street" value="{{ old('street') }}">
+
+                    @if ($errors->has('street'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('street')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="postcode">Postcode / ZIP</label>
+
+                    <input name="postcode" type="text" class="form-control @if ($errors->has('postcode')) is-invalid @endif" id="postcode" aria-describedby="postcode" value="{{ old('postcode') }}">
+
+                    @if ($errors->has('postcode'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('postcode')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+
+                            <input name="phone" type="text" class="form-control @if ($errors->has('phone')) is-invalid @endif" id="phone" aria-describedby="phone" value="{{ old('phone') }}">
+
+                            @if ($errors->has('phone'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('phone')}}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+
+                            <input name="email" type="email" class="form-control @if ($errors->has('email')) is-invalid @endif" id="email" aria-describedby="email" value="{{ old('email') }}">
+
+                            @if ($errors->has('email'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('email')}}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Totals</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>Rp {{ number_format( \Cart::getSubTotal(), 0, '.', ',' ) }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Weight</td>
+                            <td>Rp <input type="hidden" name="weight" value="{{ $weight }}"><span id="weight">{{ $weight }}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Shipping</td>
+                            <td>Rp <input type="hidden" name="shipping"><span id="shipping"></span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>Rp <input type="hidden" name="total"><span id="total">{{ \Cart::getTotal() }}</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <button type="submit" class="btn btn-secondary d-block w-100">Pay</button>
+            </div>
+        </div>
+    </form>
+</div>
+@endsection
