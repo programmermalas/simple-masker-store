@@ -13,7 +13,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-light">Invoice: {{ $payment->order->invoice }}</li>
 
-                <li class="list-group-item bg-light">Name: {{ $payment->acccount_name }}</li>
+                <li class="list-group-item bg-light">Name: {{ $payment->account_name }}</li>
 
                 <li class="list-group-item bg-light">Number: {{ $payment->account_number }}</li>
                 
