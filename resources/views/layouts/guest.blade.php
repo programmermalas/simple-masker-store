@@ -22,31 +22,20 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm" style="font-size: .7rem;">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
+    <!-- Right Side Of Navbar -->
+    <ul class="nav justify-content-end bg-dark">
+        <li class="nav-item text-white">
+            <a class="nav-link text-reset" href="#">How to order</a>
+        </li>
 
-                </ul>
+        <li class="nav-item text-white">
+            <a class="nav-link text-reset" href="{{ url('/payment') }}">Payment Confirmation</a>
+        </li>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">How to order</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/payment') }}">Payment Confirmation</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/order/detail') }}">Check your order</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li class="nav-item text-white">
+            <a class="nav-link text-reset" href="{{ url('/order/detail') }}">Check your order</a>
+        </li>
+    </ul>
 
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
@@ -90,24 +79,24 @@
         <div class="text-white bg-secondary pt-3">
             <div class="container">
                 <div class="row py-3">
-                    <div class="col-4">
-                        <p class="font-weight-bolder">PT. MASKER STORE</p>
+                    <div class="col-sm-12 col-md-4">
+                        <p class="font-weight-bolder">PT. SAHABAT UNGGUL INT</p>
     
                         <p>
                             Semarang, Indonesia <br />
-                            Email : maskerstore@mail.com <br />
+                            Email : info@sahabatunggul.co.id <br />
                         </p>
                     </div>
     
-                    <div class="col-4">
+                    <div class="col-sm-12 col-md-4">
                         <p class="font-weight-bolder">CUSTOMER CARE</p>
                         
                         <ul class="list-unstyled">
                             <li>
-                                <a class="text-decoration-none text-reset" href="#">Payment Confirmation</a>
+                                <a class="text-decoration-none text-reset" href="{{ url('/payment') }}">Payment Confirmation</a>
                             </li>
                             <li>
-                                <a class="text-decoration-none text-reset" href="#">Check your order</a>
+                                <a class="text-decoration-none text-reset" href="{{ url('/order/detail') }}">Check your order</a>
                             </li>
                             <li>
                                 <a class="text-decoration-none text-reset" href="#">How to Order</a>
@@ -121,7 +110,7 @@
                         </ul>
                     </div>
     
-                    <div class="col-4">
+                    <div class="col-sm-12 col-md-4">
                         <p class="font-weight-bolder">Contact Us</p>
                         
                         <ul class="list-unstyled">
@@ -143,7 +132,7 @@
         </div>
 
         <div class="bg-dark text-center text-muted py-2">
-            © {{ Carbon\Carbon::now()->year }} Irfan Hadian
+            © {{ Carbon\Carbon::now()->year }} Team IT PT. Sahabat Unggul Int
         </div>
     </footer>
 </body>

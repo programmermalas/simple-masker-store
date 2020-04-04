@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row d-flex justify-content-center pt-3">
-        <div class="col-8">
+    <div class="row d-flex justify-content-center pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
             @php
                 $order = $order ?? null;
             @endphp

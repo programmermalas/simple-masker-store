@@ -6,14 +6,14 @@
         @include('partials._alerts')
     </div>
 
-    <div class="row pt-3">
-        <div class="col-6">
+    <div class="row pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
             <div class="d-flex justify-content-center align-items-center shadow-sm" style="height: 480px; overflow: hidden;">
                 <img src="/storage/images/500/{{ $product->productImage->name }}" class="d-block w-100" style="background-size: cover; background-repeat: no-repeat;" alt="{{ $product->productImage->name }}">
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
             <form action="{{ url("/product/{$product->slug}") }}" method="post">
                 @csrf
 

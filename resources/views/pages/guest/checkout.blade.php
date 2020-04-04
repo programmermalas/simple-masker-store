@@ -9,12 +9,12 @@
     <form action="{{ url('/order') }}" method="post" id="order">
         @csrf
 
-        <div class="row pt-3">
-            <div class="col-8">
+        <div class="row pt-0 pt-md-3">
+            <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
                 <h5>Billing & shipping</h5>
 
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
 
@@ -27,7 +27,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
 
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="phone">Phone</label>
 
@@ -108,7 +108,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="email">Email</label>
 
@@ -124,7 +124,7 @@
                 </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
                 <table class="table">
                     <thead>
                         <tr>
@@ -141,7 +141,7 @@
 
                         <tr>
                             <td>Weight</td>
-                            <td>Rp <input type="hidden" name="weight" value="{{ $weight }}"><span id="weight">{{ $weight }}</span></td>
+                            <td><input type="hidden" name="weight" value="{{ $weight }}"><span id="weight">{{ $weight }}</span> Gram</td>
                         </tr>
 
                         <tr>

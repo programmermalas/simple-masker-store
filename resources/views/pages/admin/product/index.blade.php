@@ -4,12 +4,12 @@
 <div class="container">
     @include('partials._alerts')
 
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
             <x-sidebar />
         </div>
 
-        <div class="col-md-8">
+        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">

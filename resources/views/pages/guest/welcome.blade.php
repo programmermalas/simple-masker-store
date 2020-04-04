@@ -28,9 +28,9 @@
         </a>
     </div>
 
-    <div class="row pt-3">
-        <div class="col-4">
-            <div class="card">
+    <div class="row pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
+            <div class="card" style="height: 180px;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Easy Payment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -38,8 +38,8 @@
             </div>
         </div>
 
-        <div class="col-4">
-            <div class="card">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
+            <div class="card" style="height: 180px;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Easy Return & Exchange</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -47,8 +47,8 @@
             </div>
         </div>
 
-        <div class="col-4">
-            <div class="card">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
+            <div class="card" style="height: 180px;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Limited Lifetime Waranty</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -59,9 +59,9 @@
 
     <h4 class="pt-3">Product</h4>
 
-    <div class="row pt-3">
+    <div class="row pt-0 pt-md-3">
         @foreach ($products as $product)
-        <div class="col-4">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
             <a href="{{ url("/product/{$product->slug}") }}" class="text-decoration-none text-reset">
                 <div class="card shadow-sm">
                     <div class="py-3">

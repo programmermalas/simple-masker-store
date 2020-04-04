@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row d-flex justify-content-center pt-3">
-        <div class="col-8">
+    <div class="row d-flex justify-content-center pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
             <div class="pt-3">
                 @include('partials._alerts')
             </div>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="accountName">Account Name</label>
 
@@ -40,7 +40,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
                         <div class="form-group">
                             <label for="accountNumber">Account Number</label>
 

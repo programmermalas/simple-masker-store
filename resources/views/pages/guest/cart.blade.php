@@ -6,8 +6,8 @@
         @include('partials._alerts')
     </div>
 
-    <div class="row pt-3">
-        <div class="col-8">
+    <div class="row pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
             <form action="{{ url('/cart') }}" method="post" id="cart">
                 @csrf
                 
@@ -51,7 +51,7 @@
             </form>
         </div>
 
-        <div class="col-4 d-flex flex-column justify-content-between">
+        <div class="col-sm-12 col-md-4 pt-3 pt-md-0 d-flex flex-column justify-content-between">
             <table class="table">
                 <thead>
                     <tr>

@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center pt-0 pt-md-3">
+        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
             @include('partials._alerts')
 
             <div class="card">
