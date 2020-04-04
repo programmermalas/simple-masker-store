@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -11,7 +11,7 @@
                     Add Product
                 </div>
 
-                <form action="{{ route('admin.product.update', $product->id) }}" method="POST">
+                <form action="{{ route('admin.product.update', $product->id) }}" method="POST"  enctype="multipart/form-data">
                     @csrf
                     @method('put')
 
@@ -78,7 +78,7 @@
                                     <span class="input-group-text" id="weight">Gram</span>
                                 </div>
 
-                                <input name="weight" type="text" class="form-control @if ($errors->has('weight')) is-invalid @endif" value="{{ old('weight') }}" placeholder="5" aria-label="5" aria-describedby="weight">
+                                <input name="weight" type="text" class="form-control @if ($errors->has('weight')) is-invalid @endif" value="{{ old('weight') ?? $product->weight }}" placeholder="5" aria-label="5" aria-describedby="weight">
 
                                 @if ($errors->has('weight'))
                                     <div class="invalid-feedback">

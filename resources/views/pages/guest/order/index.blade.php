@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.guest')
 
 @section('content')
 <div class="container">
@@ -35,14 +35,14 @@
 
         <div class="col-4">
             <p class="font-weight-bolder">Thank you. Your order has been received.</p>
-                        
+
             <ul class="list-unstyled">
                 <li>Order number: {{ $order->invoice }}</li>
                 <li>Date: {{ $order->created_at->format('d/m/Y') }}</li>
                 <li>Payment method: Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International</li>
             </ul>
 
-            <a href="{{ url("/payment-confirmation") }}" class="btn btn-secondary d-block w-100">Payment confirmation</a>
+            <a href="{{ url("/payment") }}" class="btn btn-secondary d-block w-100">Payment Confirmation</a>
         </div>
     </div>
 </div>

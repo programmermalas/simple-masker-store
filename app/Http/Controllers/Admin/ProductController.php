@@ -20,7 +20,6 @@ class ProductController extends Controller
     {
         $this->middleware('auth');
         $this->path         = storage_path('app/public/images');
-        $this->pathFile     = storage_path('app/public/files');
         $this->dimentions   = ['245', '300', '500'];
     }
 
@@ -150,9 +149,10 @@ class ProductController extends Controller
             if ( $request->hasFile('image') ) {
                 $fileName   = $this->uploadImage( $request->file('image'), $product->title );
 
-                $product->productImage()->update([
-                    'id'            => Str::uuid(),
+                $product->productImage()->updateOrCreate([
                     'product_id'    => $product->id,
+                ],[
+                    'id'            => Str::uuid(),
                     'name'          => $fileName,
                     'dimentions'    => implode('|', $this->dimentions),
                     'path'          => $this->path

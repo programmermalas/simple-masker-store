@@ -37,11 +37,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Payment Confirmation</a>
+                        <a class="nav-link" href="{{ url('/payment') }}">Payment Confirmation</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Check your order</a>
+                        <a class="nav-link" href="{{ url('/order/detail') }}">Check your order</a>
                     </li>
                 </ul>
             </div>

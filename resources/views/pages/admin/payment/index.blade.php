@@ -11,10 +11,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        Order
+                        Payment
                         <form class="d-flex justify-content-between align-items-center" action="#">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Order" aria-label="Search Order" aria-describedby="button-search">
+                                <input type="text" class="form-control" placeholder="Search Payment" aria-label="Search Payment" aria-describedby="button-search">
     
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit" id="button-search">
@@ -33,11 +33,9 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Invoice</th>
-                                    <th scope="col">Buyer</th>
-                                    <th scope="col">Province</th>
-                                    <th scope="col">City</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Number</th>
+                                    <th scope="col">Nominal</th>
                                     <th class="text-center" scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -45,21 +43,15 @@
                                 @php
                                     $no = 0;
                                 @endphp
-                                @foreach( $orders as $order )
+                                @foreach( $payments as $payment )
                                 <tr>
                                     <th scope="row">{{ ++$no }}</th>
-                                    <td>{{ $order->invoice }}</td>
-                                    <td style="white-space: nowrap;">{{ $order->first_name . ' ' . $order->last_name }}</td>
-                                    <td style="white-space: nowrap;">{{ $order->province() }}</td>
-                                    <td>{{ $order->city() }}</td>
-                                    <td>{{ $order->orderProducts()->sum('quantity') }}</td>
-                                    <td>{{ $order->status }}</td>
+                                    <td>{{ $payment->order->invoice }}</td>
+                                    <td style="white-space: nowrap;">{{ $payment->account_name }}</td>
+                                    <td style="white-space: nowrap;">{{ $payment->account_number }}</td>
+                                    <td>{{ number_format( $payment->nominal, 0, '.', ',' ) }}</td>
                                     <td class="text-center" style="white-space: nowrap;">
-                                        <a href="{{ route( 'admin.order.edit', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-
-                                        <a href="{{ route( 'admin.order.show', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                        <a href="{{ route( 'admin.payment.show', $payment->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>

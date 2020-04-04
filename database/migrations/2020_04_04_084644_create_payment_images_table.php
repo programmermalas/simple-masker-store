@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderConfirmImagesTable extends Migration
+class CreatePaymentImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateOrderConfirmImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_confirm_images', function (Blueprint $table) {
+        Schema::create('payment_images', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('order_confirm_id');
-            $table->foreign('order_confirm_id')
+            $table->uuid('payment_id');
+            $table->foreign('payment_id')
                 ->references('id')
-                ->on('order_confirms')
+                ->on('payments')
                 ->onDelete('cascade');
 
             $table->char('name', 100);
@@ -37,6 +37,6 @@ class CreateOrderConfirmImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_confirm_images');
+        Schema::dropIfExists('payment_images');
     }
 }

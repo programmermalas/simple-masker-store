@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderConfirm extends Model
+class PaymentImage extends Model
 {
     use SoftDeletes;
 
@@ -15,11 +15,7 @@ class OrderConfirm extends Model
 
     public $incrementing = false;
 
-    public function order() {
-        return $this->belongsTo('App\Models\Order');
-    }
-
-    public function orderConfirmImage() {
-        return $this->hasOne('App\Models\OrderConfirmImage');
+    public function payment() {
+        return $this->belongsTo('App\Models\Payment');
     }
 }

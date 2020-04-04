@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\OrderMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +21,13 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     $products   = App\Models\Product::with('productImage')->get();
 
-    return view( 'welcome', compact('products') );
+    return view( 'pages.guest.welcome', compact('products') );
 });
 
 Route::get('/product/{product}', function ( $product ) {
     $product    = App\Models\Product::where( 'slug', $product )->first();
 
-    return view( 'product', compact('product') );
+    return view( 'pages.guest.product', compact('product') );
 });
 
 Route::post('/product/{product}', function ( Request $request, $product ) {
@@ -46,7 +49,7 @@ Route::post('/product/{product}', function ( Request $request, $product ) {
 Route::get('/cart', function () {
     $carts  = \Cart::getContent();
 
-    return view('cart', compact('carts', 'weight'));
+    return view( 'pages.guest.cart', compact('carts', 'weight') );
 });
 
 Route::get('/cart/{id}/delete', function ( $id ) {
@@ -76,7 +79,7 @@ Route::get('/checkout', function () {
         $weight += $cart->attributes['weight'] * $cart->quantity;
     }
 
-    return view('checkout', compact('weight'));
+    return view( 'pages.guest.checkout', compact('weight') );
 });
 
 Route::post('/order', function ( Request $request ) {
@@ -131,12 +134,30 @@ Route::post('/order', function ( Request $request ) {
         }
 
         $items  = \Cart::clear();
+
+        Mail::to( $order->email )->send( new OrderMail( $order ) );
     } catch (\Exception $e) {
         return redirect()->back()->with('error', $e->getMessage());
     }
 
-    return view('order', compact('order'));
+    return view( 'pages.guest.order.index', compact('order') );
 });
+
+Route::get('/order/detail', function ( Request $request ) {
+    if ( $request->invoice ) {
+        $order  = App\Models\Order::where( 'invoice', $request->invoice )->first();
+    
+        if (!$order) {
+            return redirect( '/order/detail' )->with('info', 'Order not found!');
+        }
+    }
+
+    return view( 'pages.guest.order.detail', compact('order') );
+});
+
+Route::get('/payment', 'Guest\PaymentController@index');
+
+Route::post('/payment', 'Guest\PaymentController@store');
 
 Auth::routes([
     'register'  => false,
@@ -146,6 +167,10 @@ Auth::routes([
 Route::prefix('admin')->group(function () {
     Route::name('admin.')->group(function () {
         Route::get('/', 'Admin\HomeController@index')->name('home');
+
+        Route::resource('payment', 'Admin\PaymentController')->only([
+            'index', 'show'
+        ]);
 
         Route::resource('product', 'Admin\ProductController');
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderConfirmsTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateOrderConfirmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_confirms', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->uuid('order_id');
@@ -25,10 +25,9 @@ class CreateOrderConfirmsTable extends Migration
             $table->char('account_name', 100);
             $table->char('account_number', 100);
             $table->integer('nominal');
-            $table->mediumText('note');
+            $table->mediumText('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
         });
     }
 
@@ -39,6 +38,6 @@ class CreateOrderConfirmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_confirms');
+        Schema::dropIfExists('payments');
     }
 }
