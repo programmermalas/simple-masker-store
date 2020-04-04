@@ -18,7 +18,6 @@ class PaymentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
         $this->path         = storage_path('app/public/invoices');
         $this->dimentions   = ['245', '300', '500'];
     }
