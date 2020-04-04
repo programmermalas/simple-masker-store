@@ -25,10 +25,6 @@
     <!-- Right Side Of Navbar -->
     <ul class="nav justify-content-end bg-dark">
         <li class="nav-item text-white">
-            <a class="nav-link text-reset" href="#">How to order</a>
-        </li>
-
-        <li class="nav-item text-white">
             <a class="nav-link text-reset" href="{{ url('/payment') }}">Payment Confirmation</a>
         </li>
 
