@@ -24,12 +24,18 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request )
     {
         try {
-            $orders = Order::all();
+            $orders = Order::where( 'invoice', 'LIKE', '%' . $request->search . '%' )
+                ->orWhere( 'first_name', 'LIKE', '%' . $request->search . '%' )
+                ->orWhere( 'last_name', 'LIKE', '%' . $request->search . '%' )
+                ->orWhere( 'status', 'LIKE', '%' . $request->search . '%' )
+                ->orderByDesc('created_at')
+                ->get();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

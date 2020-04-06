@@ -12,9 +12,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         Payment
-                        <form class="d-flex justify-content-between align-items-center" action="#">
+                        <form class="d-flex justify-content-between align-items-center" action="{{ route('admin.payment.index') }}" method="get">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Payment" aria-label="Search Payment" aria-describedby="button-search">
+                                <input name="search" type="text" class="form-control" placeholder="Search Payment" aria-label="Search Payment" aria-describedby="button-search">
     
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit" id="button-search">
@@ -44,6 +44,7 @@
                                     $no = 0;
                                 @endphp
                                 @foreach( $payments as $payment )
+                                @if ( $payment->order->status == 'waited' )
                                 <tr>
                                     <th scope="row">{{ ++$no }}</th>
                                     <td>{{ $payment->order->invoice }}</td>
@@ -56,6 +57,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>

@@ -12,9 +12,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         Order
-                        <form class="d-flex justify-content-between align-items-center" action="#">
+                        <form class="d-flex justify-content-between align-items-center" action="{{ route('admin.order.index') }}" method="get">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Order" aria-label="Search Order" aria-describedby="button-search">
+                                <input name="search" type="text" class="form-control" placeholder="Search Order" aria-label="Search Order" aria-describedby="button-search">
     
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit" id="button-search">

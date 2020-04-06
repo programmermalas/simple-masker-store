@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\Payment;
 use App\Models\Order;
@@ -13,12 +14,19 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request )
     {
         try {
-            $payments   = Payment::all();
+            $payments   = Payment::with('order')->whereHas('order', function ( Builder $query ) use ( $request ) {
+                    $query->where( 'invoice', 'LIKE', '%' . $request->search . '%' );
+                })
+                ->orWhere( 'account_name', 'LIKE', '%' . $request->search . '%' )
+                ->orWhere( 'account_number', 'LIKE', '%' . $request->search . '%' )
+                ->orderByDesc('created_at')
+                ->get();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -50,9 +58,20 @@ class PaymentController extends Controller
             'id'    => 'required'
         ]);
 
-        
         try {
             $order  = Order::with( 'orderProducts.product' )->where( 'id', $request->id )->first();
+
+            if ( $order->status == 'paid' ) {
+                return redirect()->back()->with( 'info', 'Payment already received!' );
+            }
+
+            if ( $order->status == 'delivered' ) {
+                return redirect()->back()->with( 'info', 'Payment already delivered!' );
+            }
+
+            if ( $order->status == 'canceled' ) {
+                return redirect()->back()->with( 'info', 'Payment already canceled!' );
+            }
 
             foreach ( $order->orderProducts as $orderProduct ) {
                 $subQuantity = $orderProduct->product->stock - $orderProduct->quantity;

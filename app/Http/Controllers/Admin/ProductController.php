@@ -26,12 +26,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request )
     {
         try {
-            $products   = Product::all();
+            $products   = Product::where( 'title', 'LIKE', '%' . $request->search . '%' )
+                ->orderByDesc('created_at')
+                ->get();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
