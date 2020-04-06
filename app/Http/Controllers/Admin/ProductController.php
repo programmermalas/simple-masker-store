@@ -139,7 +139,6 @@ class ProductController extends Controller
 
         try {
             $product->update([
-                'id'            => Str::uuid(),
                 'user_id'       => Auth::id(),
                 'title'         => $request->title,
                 'slug'          => Str::slug($request->title, '-'),
