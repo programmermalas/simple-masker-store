@@ -30,7 +30,7 @@ Route::get('/provinces', function () {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-            "key: e3120b5d3518d371a0a94e15ad05e1b2"
+            "key: " . env('API_KEY_RAJAONGKIR', null)
         ),
     ));
 
@@ -58,7 +58,7 @@ Route::get('/provinces/{id}', function ( $id ) {
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
-        "key: e3120b5d3518d371a0a94e15ad05e1b2"
+        "key: " . env('API_KEY_RAJAONGKIR', null)
     ),
     ));
 
@@ -86,7 +86,7 @@ Route::get('/province/{id}', function ( $id ) {
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
-        "key: e3120b5d3518d371a0a94e15ad05e1b2"
+        "key: " . env('API_KEY_RAJAONGKIR', null)
     ),
     ));
 
@@ -114,7 +114,7 @@ Route::get('/city/{id}', function ( $id ) {
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
-        "key: e3120b5d3518d371a0a94e15ad05e1b2"
+        "key: " . env('API_KEY_RAJAONGKIR', null)
     ),
     ));
 
@@ -144,7 +144,7 @@ Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
         CURLOPT_POSTFIELDS => "origin=398&destination=$destination&weight=$weight&courier=jne",
         CURLOPT_HTTPHEADER => array(
             "content-type: application/x-www-form-urlencoded",
-            "key: e3120b5d3518d371a0a94e15ad05e1b2"
+            "key: " . env('API_KEY_RAJAONGKIR', null)
         ),
     ));
 
