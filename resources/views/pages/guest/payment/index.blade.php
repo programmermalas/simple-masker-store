@@ -16,13 +16,7 @@
                 <div class="form-group">
                     <label for="invoice">Invoice</label>
 
-                    <input name="invoice" type="text" class="form-control @if ($errors->has('invoice')) is-invalid @endif" id="invoice" aria-describedby="invoice" value="{{ old('invoice') }}">
-
-                    @if ($errors->has('invoice'))
-                        <div class="invalid-feedback">
-                            {{$errors->first('invoice')}}
-                        </div>
-                    @endif
+                    <input name="invoice" type="text" class="form-control" id="invoice" aria-describedby="invoice" value="{{ old('invoice') }}">
                 </div>
 
                 <div class="row">
