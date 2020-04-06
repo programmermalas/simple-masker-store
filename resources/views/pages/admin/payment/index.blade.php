@@ -51,8 +51,8 @@
                                     <td style="white-space: nowrap;">{{ $payment->account_number }}</td>
                                     <td>{{ number_format( $payment->nominal, 0, '.', ',' ) }}</td>
                                     <td class="text-center" style="white-space: nowrap;">
-                                        <a href="{{ route( 'admin.payment.show', $payment->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
-                                            <i class="fas fa-eye"></i>
+                                        <a href="{{ route( 'admin.payment.edit', $payment->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                            <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
                                 </tr>

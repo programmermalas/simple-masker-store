@@ -169,7 +169,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', 'Admin\HomeController@index')->name('home');
 
         Route::resource('payment', 'Admin\PaymentController')->only([
-            'index', 'show'
+            'index', 'edit', 'update'
         ]);
 
         Route::resource('product', 'Admin\ProductController');
