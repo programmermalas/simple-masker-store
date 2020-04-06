@@ -86,7 +86,7 @@
                         
                         <div class="row d-flex justify-content-between">
                             <div class="col-sm-12 col-md-6">
-                                <input name="quantity" type="number" class="form-control" id="quantity" min="100" step="100" value="100">
+                                <input name="quantity" type="number" class="form-control" id="quantity" min="10" step="10" value="10">
                             </div>
     
                             <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
