@@ -11,33 +11,17 @@ use App\Models\Payment;
 
 class PaymentController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->path         = storage_path('app/public/invoices');
         $this->dimentions   = ['245', '300', '500'];
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('pages.guest.payment.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -52,7 +36,7 @@ class PaymentController extends Controller
             $order  = Order::where( 'invoice', $request->invoice )->first();
     
             if ( !$order ) {
-                return redirect('/payment')->with('info', 'Invoice not found!');
+                return redirect( '/payment' )->with('info', 'Invoice not found!');
             }
     
             $payment    = Payment::updateOrCreate([
@@ -78,6 +62,6 @@ class PaymentController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     
-        return redirect('/payment')->with('success', "Payment $payment->account_name successful send it!");
+        return redirect( '/payment' )->with('success', "Payment $payment->account_name successful send it!");
     }
 }
