@@ -11,39 +11,41 @@
             <form action="{{ url('/cart') }}" method="post" id="cart">
                 @csrf
                 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        @php
-                            $no = 0;
-                        @endphp
-                        @foreach ($carts as $cart)
-                        <tr>
-                            <th scope="row">{{ ++$no }}</th>
-                            <td>{{ $cart->name }}</td>
-                            <td>Rp {{ number_format( $cart->price, 0, '.', ',' ) }}</td>
-                            <td>
-                                <input name="ids[]" type="hidden"value={{ $cart->id }}>
-                                <input name="quantities[]" type="number" name="form-control" id="quantity" min="10" value="{{ $cart->quantity }}" step="10">
-                            </td>
-                            <td>
-                                <a href="{{ url( "/cart/{$cart->id}/delete" ) }}" class="btn btn-sm btn-danger rounded-circle">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        <tbody>
+                            @php
+                                $no = 0;
+                            @endphp
+                            @foreach ($carts as $cart)
+                            <tr>
+                                <th scope="row">{{ ++$no }}</th>
+                                <td>{{ $cart->name }}</td>
+                                <td>Rp {{ number_format( $cart->price, 0, '.', ',' ) }}</td>
+                                <td>
+                                    <input name="ids[]" type="hidden"value={{ $cart->id }}>
+                                    <input name="quantities[]" type="number" name="form-control" id="quantity" min="10" value="{{ $cart->quantity }}" step="10">
+                                </td>
+                                <td>
+                                    <a href="{{ url( "/cart/{$cart->id}/delete" ) }}" class="btn btn-sm btn-danger rounded-circle">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-secondary" form="cart">Update cart</button>
