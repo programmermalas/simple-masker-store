@@ -81,6 +81,11 @@
                 </a>
 
                 <div class="card-footer">
+                    @if ( $product->stock <= 0 )
+                    <div class="card-text text-center text-muted">
+                        <h5>Out of Stock</h5>
+                    </div>
+                    @else
                     <form action="{{ url("/product/{$product->slug}") }}" method="post">
                         @csrf
                         
@@ -94,6 +99,7 @@
                             </div>
                         </div>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>

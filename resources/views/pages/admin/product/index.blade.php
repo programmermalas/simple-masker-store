@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container-fluid">
-    @include('partials._alerts')
+    <div class="pt-3">
+        @include('partials._alerts')
+    </div>
 
     <div class="row pt-0 pt-md-3">
         <div class="col-sm-12 col-md-12 col-lg-2 pt-3 pt-lg-0">

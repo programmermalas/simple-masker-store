@@ -29,7 +29,13 @@
                     <li class="list-group-item bg-light">Weight: {{ $product->weight }} Gram</li>
 
                     <li class="list-group-item bg-light">Rp {{ number_format( $product->price, 0, '.', ',' ) }}</li>
-                    
+                    @if ( $product->stock <= 0 )
+                    <li class="list-group-item bg-light">
+                        <div class="card-text text-center text-muted">
+                            <h5>Out of Stock</h5>
+                        </div>
+                    </li>
+                    @else
                     <li class="list-group-item bg-light">
                         <div class="form-group mb-0 row">
                             <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
@@ -48,6 +54,7 @@
                     <li class="list-group-item bg-light">
                         <button type="submit" class="btn btn-secondary d-block w-100">Add to cart</button>
                     </li>
+                    @endif
                 </ul>
             </form>
         </div>
