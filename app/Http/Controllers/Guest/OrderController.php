@@ -28,7 +28,7 @@ class OrderController extends Controller
             'last_name'     => 'required|max:25',
             'province'      => 'required',
             'city'          => 'required',
-            'street'        => 'required|max:100',
+            'street'        => 'required|max:150',
             'postcode'      => 'required|max:10',
             'phone'         => 'required|max:15',
             'email'         => 'required|email',

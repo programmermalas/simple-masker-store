@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->char('last_name', 25);
             $table->integer('province_id');
             $table->integer('city_id');
-            $table->string('street', 100);
+            $table->string('street', 150);
             $table->char('postcode', 10);
             $table->char('phone', 15);
             $table->string('email', 100);
