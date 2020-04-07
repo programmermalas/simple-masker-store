@@ -17,7 +17,7 @@
                                 <input name="search" type="text" class="form-control" placeholder="Search Payment" aria-label="Search Payment" aria-describedby="button-search">
     
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="submit" id="button-search">
+                                    <button class="btn btn-outline-primary" type="submit" id="button-search">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
@@ -52,7 +52,7 @@
                                     <td style="white-space: nowrap;">{{ $payment->account_number }}</td>
                                     <td>{{ number_format( $payment->nominal, 0, '.', ',' ) }}</td>
                                     <td class="text-center" style="white-space: nowrap;">
-                                        <a href="{{ route( 'admin.payment.edit', $payment->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                        <a href="{{ route( 'admin.payment.edit', $payment->id ) }}" class="btn btn-sm btn-primary rounded-circle">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>

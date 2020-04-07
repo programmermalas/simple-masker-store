@@ -52,7 +52,7 @@
                         </div>
                     </li>
                     <li class="list-group-item bg-light">
-                        <button type="submit" class="btn btn-secondary d-block w-100">Add to cart</button>
+                        <button type="submit" class="btn btn-primary d-block w-100">Add to cart</button>
                     </li>
                     @endif
                 </ul>

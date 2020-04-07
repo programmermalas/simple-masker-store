@@ -42,7 +42,7 @@
                 <li>Payment method: Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International</li>
             </ul>
 
-            <a href="{{ url("/payment") }}" class="btn btn-secondary d-block w-100">Payment Confirmation</a>
+            <a href="{{ url("/payment") }}" class="btn btn-primary d-block w-100">Payment Confirmation</a>
         </div>
     </div>
 </div>

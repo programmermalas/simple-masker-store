@@ -4,7 +4,8 @@
 Invoice: {{ $order->invoice }} <br>
 Bill: Rp {{ number_format( $order->bill->total, 0, '.', ',' ) }} <br>
 
-Payment method: Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International
+Payment method: <br>
+Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International
 
 Order details <br>
 @component('mail::table')

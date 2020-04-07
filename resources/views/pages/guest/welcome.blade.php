@@ -95,7 +95,7 @@
                             </div>
     
                             <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
-                                <button type="submit" class="btn btn-secondary d-block w-100" style="white-space: nowrap;">Add to cart</button>
+                                <button type="submit" class="btn btn-primary d-block w-100" style="white-space: nowrap;">Add to cart</button>
                             </div>
                         </div>
                     </form>

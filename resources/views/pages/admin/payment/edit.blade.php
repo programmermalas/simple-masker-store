@@ -32,7 +32,7 @@
 
                         <input type="hidden" name="id" value="{{ $payment->order_id }}">
 
-                        <button type="submit" class="btn btn-secondary w-100 d-block">Received</button>
+                        <button type="submit" class="btn btn-primary w-100 d-block">Received</button>
                     </form>
                 </li>
             </ul>

@@ -21,7 +21,7 @@
                                 <input name="search" type="text" class="form-control" placeholder="Search Order" aria-label="Search Order" aria-describedby="button-search">
     
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="submit" id="button-search">
+                                    <button class="btn btn-outline-primary" type="submit" id="button-search">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
@@ -59,11 +59,11 @@
                                     <td>{{ $order->orderProducts()->sum('quantity') }}</td>
                                     <td>{{ $order->status }}</td>
                                     <td class="text-center" style="white-space: nowrap;">
-                                        <a href="{{ route( 'admin.order.edit', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                        <a href="{{ route( 'admin.order.edit', $order->id ) }}" class="btn btn-sm btn-primary rounded-circle">
                                             <i class="fas fa-edit"></i>
                                         </a>
 
-                                        <a href="{{ route( 'admin.order.show', $order->id ) }}" class="btn btn-sm btn-secondary rounded-circle">
+                                        <a href="{{ route( 'admin.order.show', $order->id ) }}" class="btn btn-sm btn-primary rounded-circle">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
@@ -107,7 +107,7 @@
                     </div>
     
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-secondary d-block w-100">Print</button>
+                        <button type="submit" class="btn btn-primary d-block w-100">Print</button>
                     </div>
                 </form>
             </div>

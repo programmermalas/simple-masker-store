@@ -88,7 +88,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-secondary d-block w-100">Search</button>
+                <button type="submit" class="btn btn-primary d-block w-100">Search</button>
             </form>
             @endif
         </div>

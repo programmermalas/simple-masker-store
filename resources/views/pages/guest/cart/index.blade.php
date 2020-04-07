@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-secondary" form="cart">Update cart</button>
+                    <button type="submit" class="btn btn-primary" form="cart">Update cart</button>
                 </div>
             </form>
         </div>
@@ -80,7 +80,7 @@
                 </tbody>
             </table>
 
-            <a href="{{ url('/checkout') }}" class="btn btn-secondary" >Proceed to checkout</a>
+            <a href="{{ url('/checkout') }}" class="btn btn-primary" >Proceed to checkout</a>
         </div>
     </div>
 </div>

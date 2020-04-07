@@ -122,7 +122,7 @@
                 }
             }
         </style>
-        <button class="btn btn-secondary d-block w-100 no-print" id="print">Print</button>
+        <button class="btn btn-primary d-block w-100 no-print" id="print">Print</button>
     </div>
 </div>
 

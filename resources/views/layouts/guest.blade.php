@@ -22,7 +22,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
-    <div class="bg-dark">
+    <div class="bg-primary">
         <div class="container">
             <ul class="nav justify-content-end">
                 <li class="nav-item text-white">
@@ -61,7 +61,7 @@
                         <a class="nav-link" href="{{ url('/cart') }}">
                             <i class="fas fa-shopping-cart"></i> 
                             @if ( \Cart::getContent()->count() > 0 )
-                                <span class="badge rounded-circle badge-dark">{{ \Cart::getContent()->count() }}</span>
+                                <span class="badge rounded-circle badge-primary">{{ \Cart::getContent()->count() }}</span>
                             @endif
                         </a>
                     </li>
@@ -75,7 +75,7 @@
     </main>
 
     <footer class="footer mt-auto pt-5">
-        <div class="text-white bg-secondary pt-3">
+        <div class="text-white bg-info pt-3">
             <div class="container">
                 <div class="row py-3">
                     <div class="col-sm-12 col-md-4">
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <div class="bg-dark text-center text-muted py-2">
+        <div class="bg-primary text-center text-white py-2">
             © {{ Carbon\Carbon::now()->year }} Team IT PT. Sahabat Unggul Int
         </div>
     </footer>

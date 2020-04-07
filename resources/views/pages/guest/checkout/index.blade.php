@@ -157,7 +157,7 @@
                     </tfoot>
                 </table>
 
-                <button type="submit" class="btn btn-secondary d-block w-100">Pay</button>
+                <button type="submit" class="btn btn-primary d-block w-100">Pay</button>
             </div>
         </div>
     </form>

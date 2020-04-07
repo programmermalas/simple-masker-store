@@ -80,7 +80,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #343a40 !important;
+    background-color: #007bff !important;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -122,9 +122,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #343a40 !important;
-    border-bottom: 1px solid #343a40 !important;
-    border-top: 1px solid #343a40 !important;
+    background-color: #007bff !important;
+    border-bottom: 1px solid #007bff !important;
+    border-top: 1px solid #007bff !important;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -231,11 +231,11 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #2d3748;
-    border-bottom: 8px solid #2d3748;
-    border-left: 18px solid #2d3748;
-    border-right: 18px solid #2d3748;
-    border-top: 8px solid #2d3748;
+    background-color: #007bff !important;
+    border-bottom: 8px solid #007bff !important;
+    border-left: 18px solid #007bff !important;
+    border-right: 18px solid #007bff !important;
+    border-top: 8px solid #007bff !important;
 }
 
 .button-green,
@@ -259,12 +259,12 @@ img {
 /* Panels */
 
 .panel {
-    border-left: #2d3748 solid 4px;
+    border-left: #007bff !important solid 4px;
     margin: 21px 0;
 }
 
 .panel-content {
-    background-color: #343a40 !important;
+    background-color: #007bff !important;
     color: #718096;
     padding: 16px;
 }
