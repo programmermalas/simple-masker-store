@@ -34,7 +34,7 @@
                                 <td>Rp {{ number_format( $cart->price, 0, '.', ',' ) }}</td>
                                 <td>
                                     <input name="ids[]" type="hidden"value={{ $cart->id }}>
-                                    <input name="quantities[]" type="number" name="form-control" id="quantity" min="10" value="{{ $cart->quantity }}" step="10">
+                                    <input name="quantities[]" type="number" name="form-control" id="quantity" min="5" value="{{ $cart->quantity }}" step="5">
                                 </td>
                                 <td>
                                     <a href="{{ url( "/cart/{$cart->id}/delete" ) }}" class="btn btn-sm btn-danger rounded-circle">

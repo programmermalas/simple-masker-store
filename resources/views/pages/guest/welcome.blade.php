@@ -62,7 +62,7 @@
 
     <div class="row pt-0 pt-md-3">
         @foreach ($products as $product)
-        <div class="col-sm-12 col-md-6 col-lg-4 pt-3 pb-3 pt-md-0">
+        <div class="col-sm-12 col-md-6 col-lg-3 pt-3 pb-3 pt-md-0">
             <div class="card shadow-sm">
                 <a href="{{ url("/product/{$product->slug}") }}" class="text-decoration-none text-reset">
                     <div class="py-3">
@@ -91,7 +91,7 @@
                         
                         <div class="row d-flex justify-content-between">
                             <div class="col-sm-12 col-md-6">
-                                <input name="quantity" type="number" class="form-control" id="quantity" min="10" step="10" value="10">
+                                <input name="quantity" type="number" class="form-control" id="quantity" min="5" step="5" value="5">
                             </div>
     
                             <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
