@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
-    <div class="row pt-0 pt-md-3">
+<div class="container-fluid">
+    <div class="row pt-0 pt-md-3" id="order">
         <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
             <h5>Order details</h5>
 
@@ -22,6 +22,7 @@
                         $no = 0;
                     @endphp
                     @foreach ($order->orderProducts as $orderProduct)
+                    @if ($orderProduct->product)
                     <tr>
                         <th scope="row">{{ ++$no }}</th>
                         <td>{{ $orderProduct->product->title }}</td>
@@ -29,6 +30,7 @@
                         <td>{{ $orderProduct->quantity }}</td>
                         <td>{{ number_format( $orderProduct->quantity * $orderProduct->product->price, 0, '.', ',' ) }}</td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -111,5 +113,22 @@
             </table>
         </div>
     </div>
+
+    <div>
+        <style>
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+            }
+        </style>
+        <button class="btn btn-secondary d-block w-100 no-print" id="print">Print</button>
+    </div>
 </div>
+
+<script>
+    $('#print').click(function () {
+        window.print();
+    });
+</script>
 @endsection
