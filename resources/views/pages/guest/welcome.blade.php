@@ -9,15 +9,15 @@
     <div id="carouselExampleControls" class="carousel slide pt-3" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://via.placeholder.com/728x140.png?text=Image+1" class="d-block w-100" alt="Image 1">
+                <img src="{!! asset('storage/banners/baner1.jpg') !!}" class="d-block w-100" alt="Banner 1">
             </div>
 
             <div class="carousel-item">
-                <img src="https://via.placeholder.com/728x140.png?text=Image+2" class="d-block w-100" alt="Image 2">
+                <img src="{!! asset('storage/banners/baner2.jpg') !!}" class="d-block w-100" alt="Banner 2">
             </div>
 
             <div class="carousel-item">
-                <img src="https://via.placeholder.com/728x140.png?text=Image+3" class="d-block w-100" alt="Image 3">
+                <img src="{!! asset('storage/banners/baner3.jpg') !!}" class="d-block w-100" alt="Banner 3">
             </div>
         </div>
 
