@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
-            <p class="font-weight-bolder">Thank you. Your order has been received.</p>
+            <p class="font-weight-bolder">Thank you. Your bill and your order has been received and email it.</p>
 
             <ul class="list-unstyled">
                 <li>Order number: {{ $order->invoice }}</li>
