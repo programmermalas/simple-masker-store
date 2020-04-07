@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="pt-3">
         @include('partials._alerts')
     </div>

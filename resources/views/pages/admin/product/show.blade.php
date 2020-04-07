@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row pt-0 pt-md-3">
         <div class="col-sm-12 col-md-6 pt-3 pt-md-0">
             <div class="d-flex justify-content-center align-items-center shadow-sm" style="height: 480px; overflow: hidden;">

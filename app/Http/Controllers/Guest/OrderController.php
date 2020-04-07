@@ -38,8 +38,8 @@ class OrderController extends Controller
         ]);
     
         try {
-            $count  = Order::withTrashed()->count();
-            $invoice    = Carbon\Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+            $count      = Order::withTrashed()->count();
+            $invoice    = Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
         
             $order = Order::create([
                 'id'            => Str::uuid(),
@@ -86,7 +86,7 @@ class OrderController extends Controller
     public function detail( Request $request )
     {
         if ( $request->invoice ) {
-            $order  = App\Models\Order::where( 'invoice', $request->invoice )->first();
+            $order  = Order::where( 'invoice', $request->invoice )->first();
         
             if (!$order) {
                 return redirect( '/order/detail' )->with('info', 'Order not found!');

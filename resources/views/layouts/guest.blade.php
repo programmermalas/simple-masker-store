@@ -22,16 +22,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
-    <!-- Right Side Of Navbar -->
-    <ul class="nav justify-content-end bg-dark">
-        <li class="nav-item text-white">
-            <a class="nav-link text-reset" href="{{ url('/payment') }}">Payment Confirmation</a>
-        </li>
-
-        <li class="nav-item text-white">
-            <a class="nav-link text-reset" href="{{ url('/order/detail') }}">Check your order</a>
-        </li>
-    </ul>
+    <div class="bg-dark">
+        <div class="container">
+            <ul class="nav justify-content-end">
+                <li class="nav-item text-white">
+                    <a class="nav-link text-reset" href="{{ url('/payment') }}">Payment Confirmation</a>
+                </li>
+        
+                <li class="nav-item text-white">
+                    <a class="nav-link text-reset" href="{{ url('/order/detail') }}">Check your order</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
