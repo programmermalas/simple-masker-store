@@ -60,7 +60,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/cart') }}">
-                            <i class="fas fa-shopping-cart"></i> 
+                            <i class="fas fa-shopping-cart text-primary"></i> 
                             @if ( \Cart::getContent()->count() > 0 )
                                 <span class="badge rounded-circle badge-primary">{{ \Cart::getContent()->count() }}</span>
                             @endif
