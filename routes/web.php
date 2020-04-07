@@ -68,8 +68,3 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 });
-
-Route::get('/mail', function () {
-    $order = App\Models\Order::orderByDesc('created_at')->first();
-    return new OrderMail($order);
-});
