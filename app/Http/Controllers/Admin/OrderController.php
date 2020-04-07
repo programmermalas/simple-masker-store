@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Auth;
+use PDF;
+use Carbon\Carbon;
 
 use App\Models\Order;
 
@@ -98,5 +100,23 @@ class OrderController extends Controller
         }
 
         return redirect()->route('admin.order.index')->with('info', "Order $order->invoice updated!");
+    }
+
+    public function print( Request $request ) {
+        $request->validate([
+            'date'      => 'date_format:d/m/Y',
+            'status'    => 'required'
+        ]);
+
+        try {
+            $date   = Carbon::createFromFormat('d/m/Y', $request->date);
+            $datas  = Order::with('orderProducts')->whereDate('created_at', $date)->where('status', $request->status)->get();
+
+            $pdf    = PDF::loadView('pdfs.order', compact('datas', 'date'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return $pdf->stream('Order ' . $date->format('d-m-Y'));
     }
 }

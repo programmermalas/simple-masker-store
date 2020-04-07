@@ -61,6 +61,8 @@ Route::prefix('admin')->group(function () {
 
         Route::resource('product', 'Admin\ProductController');
 
+        Route::get('/order/print', 'Admin\OrderController@print')->name('order.print');
+
         Route::resource('order', 'Admin\OrderController')->except([
             'create', 'store', 'destroy'
         ]);

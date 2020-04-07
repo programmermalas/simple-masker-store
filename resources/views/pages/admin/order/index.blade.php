@@ -1,13 +1,17 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
+    <div class="pt-3">
+        @include('partials._alerts')
+    </div>
+
     <div class="row pt-0 pt-md-3">
-        <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
+        <div class="col-sm-12 col-md-12 col-lg-2 pt-3 pt-lg-0">
             <x-sidebar />
         </div>
 
-        <div class="col-sm-12 col-md-8 pt-3 pt-md-0">
+        <div class="col-sm-12 col-md-12 col-lg-8 pt-3 pt-lg-0">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
@@ -69,6 +73,42 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-2 pt-3 pt-lg-0">
+            <div class="card">
+                <div class="card-header">Print</div>
+            
+                <form action="{{ route('admin.order.print') }}" method="get">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+
+                            <input type="text" name="date" id="date" class="form-control @if ($errors->has('date')) is-invalid @endif" value="{{ old('date') }}" placeholder="d-m-Y">
+
+                            @if ($errors->has('date'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('date')}}
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="status">Status</label>
+
+                            <select name="status" class="custom-select" id="status">
+                                <option value="waited">Waited</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-secondary d-block w-100">Print</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
