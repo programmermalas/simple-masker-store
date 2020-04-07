@@ -32,7 +32,6 @@
                             <label for="status">Status</label>
         
                             <select name="status" class="custom-select @if ($errors->has('status')) is-invalid @endif" id="status">
-                                <option value="waited" {{ $order->status == 'waited' ? 'selected' : null }}>Waited</option>
                                 <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : null }}>Delivered</option>
                                 <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : null }}>Canceled</option>
                             </select>
