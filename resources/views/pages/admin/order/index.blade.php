@@ -99,6 +99,7 @@
 
                             <select name="status" class="custom-select" id="status">
                                 <option value="waited">Waited</option>
+                                <option value="paid">Paid</option>
                                 <option value="delivered">Delivered</option>
                                 <option value="canceled">Canceled</option>
                             </select>
