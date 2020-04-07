@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="date">Date</label>
 
-                            <input type="text" name="date" id="date" class="form-control @if ($errors->has('date')) is-invalid @endif" value="{{ old('date') }}" placeholder="d-m-Y">
+                            <input type="text" name="date" id="date" class="form-control @if ($errors->has('date')) is-invalid @endif" value="{{ old('date') }}" placeholder="d/m/Y">
 
                             @if ($errors->has('date'))
                                 <div class="invalid-feedback">
