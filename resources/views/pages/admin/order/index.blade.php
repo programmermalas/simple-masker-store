@@ -50,6 +50,7 @@
                                     $no = 0;
                                 @endphp
                                 @foreach( $orders as $order )
+                                @if ($order->status != 'canceled')
                                 <tr>
                                     <th scope="row">{{ ++$no }}</th>
                                     <td>{{ $order->invoice }}</td>
@@ -68,6 +69,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
