@@ -43,12 +43,16 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td>Shipping </td>
-                        <td>Rp {{ number_format( $order->bill->shipping, 0, '.', ',' ) }}</td>
+                        <td>Quantity </td>
+                        <td>{{ $order->orderProducts->sum('quantity') }}</td>
                     </tr>
                     <tr>
                         <td>Weight</td>
                         <td>{{ number_format( $order->bill->weight, 0, '.', ',' ) }} Gram</td>
+                    </tr>
+                    <tr>
+                        <td>Shipping </td>
+                        <td>Rp {{ number_format( $order->bill->shipping, 0, '.', ',' ) }}</td>
                     </tr>
                     <tr>
                         <td>Total</td>
