@@ -100,6 +100,9 @@ class PaymentController extends Controller
             ->addColumn('invoice', function ( $payment ) {
                 return $payment->order->invoice;
             })
+            ->addColumn('nominal', function ( $payment ) {
+                return 'Rp ' . number_format( $payment->nominal, 0, '.', ',' );
+            })
             ->addColumn('date', function ( $payment ) {
                 return $payment->created_at->diffForHumans();
             })

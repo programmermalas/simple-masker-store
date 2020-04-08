@@ -56,7 +56,13 @@ Route::prefix('admin')->group(function () {
             'index', 'edit', 'update'
         ]);
 
-        Route::resource('product', 'Admin\ProductController');
+        Route::get('/product/table', 'Admin\ProductController@table')->name('product.table');
+
+        Route::get('product/{product}/delete', 'Admin\ProductController@destroy')->name('product.destroy');
+
+        Route::resource('product', 'Admin\ProductController')->except([
+            'destroy'
+        ]);
 
         Route::get('/order/print', 'Admin\OrderController@print')->name('order.print');
 

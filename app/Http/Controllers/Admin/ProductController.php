@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Auth;
+use DataTables;
 
 use App\Models\Product;
 
@@ -182,5 +183,40 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.product.index')->with('warning', "Product $product->title destroyed!");
+    }
+
+    public function table( Request $request ) {
+        $data   = Product::orderByDesc('created_at')
+            ->get();
+
+        $table  = Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('price', function ( $product ) {
+                return 'Rp ' . number_format( $product->price, 0, '.', ',' );
+            })
+            ->addColumn('date', function ( $product ) {
+                return $product->created_at->diffForHumans();
+            })
+            ->addColumn('action', function( $product ) {
+                    $btn = '
+                        <a href="' . route('admin.product.edit', $product->id) . '" class="btn btn-sm btn-primary rounded-circle">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    
+                        <a href="' . route('admin.product.show', $product->id) . '" class="btn btn-sm btn-primary rounded-circle">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                        <a href="' . route( 'admin.product.destroy', $product->id ) . '" class="btn btn-sm btn-danger rounded-circle">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    ';
+
+                    return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        
+        return $table;
     }
 }

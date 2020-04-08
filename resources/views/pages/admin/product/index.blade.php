@@ -34,52 +34,55 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="product-table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Stock</th>
+                                <th scope="col">Date</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @php
-                                $no = 0;
-                            @endphp
-
-                            @foreach ($products as $product)
-                                <tr>
-                                    <th scope="row">{{ ++$no }}</th>
-                                    <td>{{ $product->title }}</td>
-                                    <td>Rp {{ number_format($product->price, 0, '.', ',') }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td class="text-center">
-                                        <form action="{{ route('admin.product.destroy', $product->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-
-                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-sm btn-primary rounded-circle">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        
-                                            <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-sm btn-primary rounded-circle">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-
-                                            <button type="submit" class="btn btn-sm btn-danger rounded-circle">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    $(function () {
+        $('#product-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.product.table') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'title', name: 'title'},
+                {data: 'price', name: 'price'},
+                {data: 'stock', name: 'stock'},
+                {data: 'date', name: 'date'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    targets: [0, 2, 3, 4, 5], 
+                    className: 'text-center align-middle no-wrap'
+                },
+                {
+                    targets: [1], 
+                    className: 'align-middle no-wrap'
+                },
+            ],
+            bAutoWidth: false,
+            drawCallback: function (settings) {
+                $('#product-table').unwrap().wrap('<div class="table-responsive py-1"></div>');
+            },
+        });
+    });
+</script>
+@endpush
 @endsection
