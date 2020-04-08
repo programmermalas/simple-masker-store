@@ -9,6 +9,9 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th colspan="5" class="text-center">Invoice: {{ $order->invoice }}</th>
+                    </tr>
+                    <tr>
                         <th scope="col">#</th>
                         <th scope="col">Product</th>
                         <th scope="col">Price</th>
