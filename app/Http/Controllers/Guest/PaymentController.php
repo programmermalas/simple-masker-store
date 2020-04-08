@@ -38,7 +38,7 @@ class PaymentController extends Controller
             if ( !$order ) {
                 return redirect( '/payment' )->with('info', 'Invoice not found!');
             }
-    
+
             $payment    = Payment::updateOrCreate([
                 'order_id'      => $order->id,
             ],[
@@ -57,6 +57,10 @@ class PaymentController extends Controller
                 'name'          => $fileName,
                 'dimentions'    => implode( '|', $this->dimentions ),
                 'path'          => $this->path
+            ]);
+
+            $order->update([
+                'status'    => 'payment_confirmation'
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

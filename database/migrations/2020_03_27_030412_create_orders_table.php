@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->char('phone', 15);
             $table->string('email', 100);
             $table->char('resi', 50)->nullable();
-            $table->enum('status', ['waited', 'paid', 'sended', 'delivered', 'canceled']);
+            $table->enum('status', ['waited', 'payment_confirmation', 'paid', 'sended', 'delivered', 'canceled']);
             $table->softDeletes();
             $table->timestamps();
         });
