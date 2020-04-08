@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use DataTables;
 
 use App\Models\Payment;
 use App\Models\Order;
@@ -17,21 +18,9 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index( Request $request )
+    public function index()
     {
-        try {
-            $payments   = Payment::with('order')->whereHas('order', function ( Builder $query ) use ( $request ) {
-                    $query->where( 'invoice', 'LIKE', '%' . $request->search . '%' );
-                })
-                ->orWhere( 'account_name', 'LIKE', '%' . $request->search . '%' )
-                ->orWhere( 'account_number', 'LIKE', '%' . $request->search . '%' )
-                ->orderByDesc('created_at')
-                ->get();
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-        }
-
-        return view( 'pages.admin.payment.index', compact('payments') );
+        return view( 'pages.admin.payment.index' );
     }
 
     /**
@@ -97,5 +86,35 @@ class PaymentController extends Controller
         }
 
         return redirect()->back()->with( 'info', 'Payment received!' );
+    }
+
+    public function table( Request $request ) {
+        $data   = Payment::whereHas('order', function ( $order ) {
+                $order->where('status', '!=', 'paid');
+            })
+            ->orderByDesc('created_at')
+            ->get();
+
+        $table  = Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('invoice', function ( $payment ) {
+                return $payment->order->invoice;
+            })
+            ->addColumn('date', function ( $payment ) {
+                return $payment->created_at->diffForHumans();
+            })
+            ->addColumn('action', function( $payment ) {
+                    $btn = '
+                        <a href="' . route( 'admin.payment.edit', $payment->id ) . '" class="btn btn-sm btn-primary rounded-circle">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    ';
+
+                    return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        
+        return $table;
     }
 }

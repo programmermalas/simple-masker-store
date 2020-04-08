@@ -10,61 +10,61 @@
         <div class="col-sm-12 col-md-12 col-lg-10 pt-3 pt-lg-0">
             <div class="card">
                 <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        Payment
-                        <form class="d-flex justify-content-between align-items-center" action="{{ route('admin.payment.index') }}" method="get">
-                            <div class="input-group">
-                                <input name="search" type="text" class="form-control" placeholder="Search Payment" aria-label="Search Payment" aria-describedby="button-search">
-    
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-search">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    Payment
                 </div>
 
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Number</th>
-                                    <th scope="col">Nominal</th>
-                                    <th class="text-center" scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $no = 0;
-                                @endphp
-                                @foreach( $payments as $payment )
-                                @if ( $payment->order->status == 'waited' )
-                                <tr>
-                                    <th scope="row">{{ ++$no }}</th>
-                                    <td>{{ $payment->order->invoice }}</td>
-                                    <td style="white-space: nowrap;">{{ $payment->account_name }}</td>
-                                    <td style="white-space: nowrap;">{{ $payment->account_number }}</td>
-                                    <td>{{ number_format( $payment->nominal, 0, '.', ',' ) }}</td>
-                                    <td class="text-center" style="white-space: nowrap;">
-                                        <a href="{{ route( 'admin.payment.edit', $payment->id ) }}" class="btn btn-sm btn-primary rounded-circle">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-striped" id="payment-table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number</th>
+                                <th scope="col">Nominal</th>
+                                <th scope="col">Date</th>
+                                <th class="text-center" scope="col">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('#payment-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.payment.table') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'invoice', name: 'invoice'},
+                    {data: 'account_name', name: 'account_name'},
+                    {data: 'account_number', name: 'account_number'},
+                    {data: 'nominal', name: 'nominal'},
+                    {data: 'date', name: 'date'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+                columnDefs: [
+                    {
+                        targets: [0, 1, 4, 5, 6], 
+                        className: 'text-center align-middle no-wrap'
+                    },
+                    {
+                        targets: [2, 3, 4], 
+                        className: 'align-middle no-wrap'
+                    },
+                ],
+                bAutoWidth: false,
+                drawCallback: function (settings) {
+                    $('#payment-table').unwrap().wrap('<div class="table-responsive py-1"></div>');
+                },
+            });
+        });
+    </script>
+@endpush
 @endsection

@@ -106,6 +106,7 @@ class OrderController extends Controller
                 }
             })
             ->where('status', '!=', 'canceled')
+            ->orderByDesc('created_at')
             ->get();
 
         $table  = Datatables::of($data)
@@ -121,6 +122,9 @@ class OrderController extends Controller
             })
             ->addColumn('quantity', function ( $order ) {
                 return $order->orderProducts()->sum('quantity');
+            })
+            ->addColumn('date', function ( $order ) {
+                return $order->created_at->diffForHumans();
             })
             ->addColumn('action', function( $order ) {
                     $btn = '

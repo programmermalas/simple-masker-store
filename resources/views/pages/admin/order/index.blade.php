@@ -28,6 +28,7 @@
                                 <th scope="col">City</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Date</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -124,18 +125,19 @@
                     }
                 },
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                     {data: 'invoice', name: 'invoice'},
                     {data: 'buyer', name: 'buyer'},
                     {data: 'province', name: 'province'},
                     {data: 'city', name: 'city'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 5, 6, 7], 
+                        targets: [0, 5, 6, 7, 8], 
                         className: 'text-center align-middle no-wrap'
                     },
                     {

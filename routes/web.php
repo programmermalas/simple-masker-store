@@ -1,11 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
-
-use App\Mail\OrderMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +49,8 @@ Auth::routes([
 Route::prefix('admin')->group(function () {
     Route::name('admin.')->group(function () {
         Route::get('/', 'Admin\HomeController@index')->name('home');
+
+        Route::get('/payment/table', 'Admin\PaymentController@table')->name('payment.table');
 
         Route::resource('payment', 'Admin\PaymentController')->only([
             'index', 'edit', 'update'
