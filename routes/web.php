@@ -63,6 +63,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/order/print', 'Admin\OrderController@print')->name('order.print');
 
+        Route::get('/order/table', 'Admin\OrderController@table')->name('order.table');
+
         Route::resource('order', 'Admin\OrderController')->except([
             'create', 'store', 'destroy'
         ]);

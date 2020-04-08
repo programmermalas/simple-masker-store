@@ -163,55 +163,59 @@
     </form>
 </div>
 
+@push('scripts')
 <script>
-    $('select[name="city"]').prop('disabled', true);
-    $('#shipping').html(0);
-    let total = $('#total').html();
-    $('input[name="total"]').val( total );
-    $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
+    $(function () {
+        $('select[name="city"]').prop('disabled', true);
+        $('#shipping').html(0);
+        let total = $('#total').html();
+        $('input[name="total"]').val( total );
+        $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
 
-    let provinces = [];
+        let provinces = [];
 
-    $.get('/api/provinces', function ( data ) {
-        $('select[name="province"]').empty().append( new Option( 'Select Province', null ) );
+        $.get('/api/provinces', function ( data ) {
+            $('select[name="province"]').empty().append( new Option( 'Select Province', null ) );
 
-        $.map( data.rajaongkir.results, function ( value, index ) {
-            $('select[name="province"]').append( new Option( value.province, value.province_id ) );
+            $.map( data.rajaongkir.results, function ( value, index ) {
+                $('select[name="province"]').append( new Option( value.province, value.province_id ) );
+            });
         });
-    });
 
-    $('select[name="province"]').change(function () {
-        $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
+        $('select[name="province"]').change(function () {
+            $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
 
-        if ( $(this).val() !== null ) {
-            $.get('/api/provinces/' + $(this).val(), function ( data ) {
-                $('select[name="city"]').prop('disabled', true);
+            if ( $(this).val() !== null ) {
+                $.get('/api/provinces/' + $(this).val(), function ( data ) {
+                    $('select[name="city"]').prop('disabled', true);
 
-                if ( data.rajaongkir.results ) {
-                    $('select[name="city"]').prop('disabled', false);
+                    if ( data.rajaongkir.results ) {
+                        $('select[name="city"]').prop('disabled', false);
 
-                    $.map( data.rajaongkir.results, function ( value, index ) {
-                        $('select[name="city"]').append( new Option( value.type + ' ' + value.city_name, value.city_id ) );
-                    });
+                        $.map( data.rajaongkir.results, function ( value, index ) {
+                            $('select[name="city"]').append( new Option( value.type + ' ' + value.city_name, value.city_id ) );
+                        });
+                    }
+                });
+            }
+        });
+
+        $('select[name="city"]').change(function () {
+            $.get('/api/cost/' + $(this).val() + '/' + $('#weight').html(), function ( data ) {
+                $('#shipping').html(0);
+
+                if (data.rajaongkir.results) {
+                    let shipping = data.rajaongkir.results[0].costs[1].cost[0].value;
+                    let totals = parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value;
+
+                    $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
+                    $('input[name="shipping"]').val( shipping );
+                    $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
+                    $('input[name="total"]').val( totals );
                 }
             });
-        }
-    });
-
-    $('select[name="city"]').change(function () {
-        $.get('/api/cost/' + $(this).val() + '/' + $('#weight').html(), function ( data ) {
-            $('#shipping').html(0);
-
-            if (data.rajaongkir.results) {
-                let shipping = data.rajaongkir.results[0].costs[1].cost[0].value;
-                let totals = parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value;
-
-                $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
-                $('input[name="shipping"]').val( shipping );
-                $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
-                $('input[name="total"]').val( totals );
-            }
         });
     });
 </script>
+@endpush
 @endsection

@@ -12,14 +12,26 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}" defer></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .no-wrap {
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -77,5 +89,28 @@
     <main>
         @yield('content')
     </main>
+
+    <script>
+        $(function () {
+            $.validator.setDefaults({
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback text-center')
+                    element.closest('.form-group').append(error)
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid').empty()
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid')
+                }
+            });
+
+            $.validator.addMethod('dateFormat', function(value, element) {
+                return this.optional(element) || value.match(/^\d\d?\/+\d\d\/+\d\d\d\d$/);
+            }, 'Please enter a date in the format dd/mm/yyyy.');
+        })
+    </script>
+    @stack('scripts')
 </body>
 </html>

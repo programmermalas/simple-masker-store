@@ -135,5 +135,7 @@
             © {{ Carbon\Carbon::now()->year }} Team IT PT. Sahabat Unggul Int
         </div>
     </footer>
+
+    @stack('scripts')
 </body>
 </html>

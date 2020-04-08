@@ -127,8 +127,10 @@
 </div>
 
 <script>
-    $('#print').click(function () {
-        window.print();
+    $(function () {
+        $('#print').click(function () {
+            window.print();
+        });
     });
 </script>
 @endsection
