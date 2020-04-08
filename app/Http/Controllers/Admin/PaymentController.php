@@ -62,7 +62,11 @@ class PaymentController extends Controller
             $order  = Order::with( 'orderProducts.product' )->where( 'id', $request->id )->first();
 
             if ( $order->status == 'paid' ) {
-                return redirect()->back()->with( 'info', 'Payment already received!' );
+                return redirect()->back()->with( 'info', 'Payment already paid!' );
+            }
+
+            if ( $order->status == 'sended' ) {
+                return redirect()->back()->with( 'info', 'Payment already sended!' );
             }
 
             if ( $order->status == 'delivered' ) {
