@@ -115,10 +115,10 @@ class OrderController extends Controller
                 return $order->first_name . ' ' . $order->last_name;
             })
             ->addColumn('province', function ( $order ) {
-                return $order->province();
+                return $order->province_id;
             })
             ->addColumn('city', function ( $order ) {
-                return $order->city();
+                return $order->city_id;
             })
             ->addColumn('quantity', function ( $order ) {
                 return $order->orderProducts()->sum('quantity');
