@@ -64,8 +64,6 @@ Route::prefix('admin')->group(function () {
             'destroy'
         ]);
 
-        Route::get('/order/fix', 'Admin\OrderController@fix')->name('order.fix');
-
         Route::get('/order/print', 'Admin\OrderController@print')->name('order.print');
 
         Route::get('/order/table', 'Admin\OrderController@table')->name('order.table');
