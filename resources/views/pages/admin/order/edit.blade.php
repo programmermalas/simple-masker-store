@@ -16,8 +16,34 @@
                     @method('put')
 
                     <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label for="firstName">First Name</label>
+    
+                                <input name="first_name" type="text" class="form-control @if ($errors->has('first_name')) is-invalid @endif" id="firstName" value="{{ old('first_name') ?? $order->first_name }}" placeholder="Resi">
+    
+                                @if ($errors->has('first_name'))
+                                    <div class="invalid-feedback">
+                                        {{$errors->first('first_name')}}
+                                    </div>
+                                @endif
+                            </div>
+    
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label for="lastName">Last Name</label>
+    
+                                <input name="last_name" type="text" class="form-control @if ($errors->has('last_name')) is-invalid @endif" id="lastName" value="{{ old('last_name') ?? $order->last_name }}" placeholder="Resi">
+    
+                                @if ($errors->has('last_name'))
+                                    <div class="invalid-feedback">
+                                        {{$errors->first('last_name')}}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label for="title">Resi</label>
+                            <label for="resi">Resi</label>
 
                             <input name="resi" type="text" class="form-control @if ($errors->has('resi')) is-invalid @endif" id="resi" value="{{ old('resi') ?? $order->resi }}" placeholder="Resi">
 

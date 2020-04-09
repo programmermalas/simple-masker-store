@@ -79,12 +79,16 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'resi'      => 'max:30',
-            'status'    => 'required',
+            'first_name'    => 'required|max:25',
+            'last_name'     => 'required|max:25',
+            'resi'          => 'max:30',
+            'status'        => 'required',
         ]);
 
         try {
             $order->update([
+                'first_name'=> $reqiest->first_name,
+                'last_name' => $reqiest->last_name,
                 'resi'      => $request->resi,
                 'status'    => $request->status
             ]);
