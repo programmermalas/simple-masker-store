@@ -46,39 +46,11 @@ Route::get('/provinces', function () {
     }
 });
 
-Route::get('/provinces/{id}', function ( $id ) {
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://pro.rajaongkir.com/api/city?province=$id",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => array(
-        "key: " . env('API_KEY_RAJAONGKIR', null)
-    ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-        return "cURL Error #:" . $err;
-    } else {
-        return json_decode( $response, true );
-    }
-});
-
 Route::get('/province/{id}', function ( $id ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://pro.rajaongkir.com/api/province?id=$id",
+    CURLOPT_URL => "https://pro.rajaongkir.com/api/city?province=$id",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -118,7 +90,7 @@ Route::get('/city/{id}', function ( $id ) {
     ),
     ));
 
-    $response = curl_exec($curl);
+    $response = json_decode( curl_exec($curl), true );
     $err = curl_error($curl);
 
     curl_close($curl);
@@ -126,7 +98,7 @@ Route::get('/city/{id}', function ( $id ) {
     if ($err) {
         return "cURL Error #:" . $err;
     } else {
-        return json_decode( $response, true );
+        return $response;
     }
 });
 
@@ -148,7 +120,7 @@ Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
         ),
     ));
 
-    $response = curl_exec($curl);
+    $response = json_decode( curl_exec($curl), true );
     $err = curl_error($curl);
 
     curl_close($curl);
@@ -156,6 +128,6 @@ Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
     if ($err) {
         return "cURL Error #:" . $err;
     } else {
-        return json_decode( $response, true );
+        return $response;
     }
 });

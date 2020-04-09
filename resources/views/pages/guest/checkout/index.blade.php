@@ -43,6 +43,22 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="recipientsName">Recipient's Name</label>
+
+                    <input name="recipients_name" type="text" class="form-control @if ($errors->has('recipients_name')) is-invalid @endif" id="recipientsName" aria-describedby="recipientsName" value="{{ old('recipients_name') }}">
+
+                    <small id="recipientsNameInline" class="text-muted">
+                        If you want dropshipper *Optional
+                    </small>
+
+                    @if ($errors->has('recipients_name'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('recipients_name')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
                     <label for="province">Province</label>
 
                     <select name="province" class="custom-select @if ($errors->has('province')) is-invalid @endif" id="province">
@@ -122,6 +138,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="marketing">Marketing</label>
+
+                    <input name="marketing" type="text" class="form-control @if ($errors->has('marketing')) is-invalid @endif" id="marketing" aria-describedby="marketing" value="{{ old('marketing') }}">
+
+                    <small id="recipientsNameInline" class="text-muted">
+                        If you are marketing *Optional
+                    </small>
+
+                    @if ($errors->has('marketing'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('marketing')}}
+                        </div>
+                    @endif
+                </div>
             </div>
 
             <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
@@ -183,10 +215,14 @@
         });
 
         $('select[name="province"]').change(function () {
+            if ( $(this).val() === 'null' ) {
+                $('select[name="city"]').prop('disabled', true);
+            }
+
             $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
 
-            if ( $(this).val() !== null ) {
-                $.get('/api/provinces/' + $(this).val(), function ( data ) {
+            if ( $(this).val() !== 'null' ) {
+                $.get('/api/province/' + $(this).val(), function ( data ) {
                     $('select[name="city"]').prop('disabled', true);
 
                     if ( data.rajaongkir.results ) {
