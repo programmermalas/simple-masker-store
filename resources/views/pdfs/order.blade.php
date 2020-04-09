@@ -42,8 +42,8 @@
                     <tr>
                         <td style="text-align: center;">{{ ++$no }}</td>
                         <td>{{ $data->first_name }} {{ $data->last_name }}</td>
-                        <td>{{ $data->province_id }}</td>
-                        <td>{{ $data->city_id }}</td>
+                        <td>{{ $data->province->name }}</td>
+                        <td>{{ $data->city->name }}</td>
                         <td>{{ $data->street }}</td>
                         <td style="text-align: center;">{{ $data->orderProducts->sum('quantity') }}</td>
                         <td style="text-align: center;">{{ $data->status }}</td>
