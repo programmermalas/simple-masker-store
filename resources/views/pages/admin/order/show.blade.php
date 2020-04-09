@@ -78,6 +78,11 @@
                     </tr>
 
                     <tr>
+                        <td>Recipient's </td>
+                        <td>{{ $order->recipients }}</td>
+                    </tr>
+
+                    <tr>
                         <td>Province</td>
                         <td>{{ $order->province->name }}</td>
                     </tr>
