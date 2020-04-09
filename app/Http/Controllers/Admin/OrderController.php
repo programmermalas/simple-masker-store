@@ -86,6 +86,12 @@ class OrderController extends Controller
         ]);
 
         try {
+            if ( $order->status != 'waited' && $order->status != 'sended' && $order->status != 'delivered' ) {
+                foreach ( $order->orderProducts as $orderProduct ) {
+                    $orderProduct->product->increment( 'stock', $orderProduct->quantity );
+                }
+            }
+
             $order->update([
                 'first_name'=> $request->first_name,
                 'last_name' => $request->last_name,
