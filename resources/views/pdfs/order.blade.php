@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Order {{ $date->format('d/m/Y') }}</title>
+        <title>Order {{ $date ? $date->format('d/m/Y') : 'All Date' }}</title>
     </head>
 
     <style>
@@ -21,7 +21,7 @@
     </style>
 
     <body>
-        <h3 class="title">Order tanggal {{ $date->format('d/m/Y') }}</h3>
+        <h3 class="title">Order {{ $date ? $date->format('d/m/Y') : 'All Date' }}</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -42,8 +42,8 @@
                     <tr>
                         <td style="text-align: center;">{{ ++$no }}</td>
                         <td>{{ $data->first_name }} {{ $data->last_name }}</td>
-                        <td>{{ $data->province() }}</td>
-                        <td>{{ $data->city() }}</td>
+                        <td>{{ $data->province_id }}</td>
+                        <td>{{ $data->city_id }}</td>
                         <td>{{ $data->street }}</td>
                         <td style="text-align: center;">{{ $data->orderProducts->sum('quantity') }}</td>
                         <td style="text-align: center;">{{ $data->status }}</td>

@@ -146,17 +146,22 @@ class OrderController extends Controller
     }
 
     public function print( Request $request ) {
-        $request->validate([
-            'date'      => 'date_format:d/m/Y',
-        ]);
-
         try {
-            $date   = Carbon::createFromFormat('d/m/Y', $request->date);
-            $datas  = Order::with('orderProducts')->whereDate('created_at', $date)->where(function ( $order ) use ( $request ) {
+            $date = null;
+
+            $datas  = Order::with('orderProducts')
+                ->where(function ( $order ) use ( $request ) {
+                    if ( $request->date ) {
+                        $date   = Carbon::createFromFormat('d/m/Y', $request->date);
+                        $order->whereDate('created_at', $date);
+                    }
+                })
+                ->where(function ( $order ) use ( $request ) {
                     if ( $request->status ) {
                         $order->where( 'status', $request->status );
                     }
                 })
+                ->where('status', '!=', 'canceled')
                 ->get();
 
             $pdf    = PDF::loadView('pdfs.order', compact('datas', 'date'));
@@ -164,6 +169,6 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return $pdf->stream('Order ' . $date->format('d-m-Y'));
+        return $pdf->stream('Order ' . ($date ? $date->format('d-m-Y') : 'All Date'));
     }
 }

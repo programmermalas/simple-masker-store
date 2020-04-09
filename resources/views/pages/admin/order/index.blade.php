@@ -80,7 +80,7 @@
                             <input type="text" name="date" id="date" class="form-control @if ($errors->has('date')) is-invalid @endif" value="{{ old('date') }}" placeholder="DD/MM/YYYY">
 
                             @if ($errors->has('date'))
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback text-center">
                                     {{$errors->first('date')}}
                                 </div>
                             @endif
