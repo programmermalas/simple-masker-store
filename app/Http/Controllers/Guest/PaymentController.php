@@ -39,6 +39,10 @@ class PaymentController extends Controller
                 return redirect( '/payment' )->with('info', 'Invoice not found!');
             }
 
+            if ( $order->status == 'paid' || $order->status == 'sended' || $order->status == 'delivered' || $order->status == 'canceled') {
+                return redirect( '/payment' )->with('info', "Your order has been $order->status !");
+            }
+
             $payment    = Payment::updateOrCreate([
                 'order_id'      => $order->id,
             ],[
