@@ -13,12 +13,43 @@ use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Bill;
 use App\Models\OrderProduct;
+use App\Models\Province;
+use App\Models\City;
 
 class OrderController extends Controller
 {
     public function index()
     {
         return abort(404);
+    }
+
+    public function getCity( $id )
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://pro.rajaongkir.com/api/city?id=$id",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+                "key: " . env('API_KEY_RAJAONGKIR', null)
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return "cURL Error #:" . $err;
+        } else {
+            return json_decode( $response, true );
+        }
     }
 
     public function store(Request $request)
@@ -40,14 +71,26 @@ class OrderController extends Controller
         try {
             $count      = Order::withTrashed()->count();
             $invoice    = Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+            
+            $dataCity   = $this->getCity( $request->city );
+
+            $province   = Province::firstOrCreate([
+                'id'    => $dataCity['rajaongkir']['results']['province_id'],
+                'name'  => $dataCity['rajaongkir']['results']['province']
+            ]);
+
+            $city   = City::firstOrCreate([
+                'id'    => $dataCity['rajaongkir']['results']['city_id'],
+                'name'  => $dataCity['rajaongkir']['results']['city_name']
+            ]);
         
             $order = Order::create([
                 'id'            => Str::uuid(),
                 'invoice'       => $invoice,
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
-                'province_id'   => $request->province,
-                'city_id'       => $request->city,
+                'province_id'   => $province->id,
+                'city_id'       => $city->id,
                 'street'        => $request->street,
                 'postcode'      => $request->postcode,
                 'phone'         => $request->phone,

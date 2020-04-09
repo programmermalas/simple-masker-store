@@ -41,11 +41,11 @@
                             <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
 
                             <div class="col-sm-10">
-                                <input name="quantity" type="number" class="form-control @if ($errors->has('title')) is-invalid @endif" id="quantity" min="100" step="100" value="{{ old('title') ?? '100' }}">
+                                <input name="quantity" type="number" class="form-control @if ($errors->has('quantity')) is-invalid @endif" id="quantity" min="5" step="5" value="{{ old('quantity') ?? '5' }}">
 
-                                @if ($errors->has('title'))
+                                @if ($errors->has('quantity'))
                                     <div class="invalid-feedback">
-                                        {{$errors->first('title')}}
+                                        {{$errors->first('quantity')}}
                                     </div>
                                 @endif
                             </div>

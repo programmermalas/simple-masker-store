@@ -26,4 +26,12 @@ class Order extends Model
     public function bill() {
         return $this->hasOne('App\Models\Bill');
     }
+
+    public function province() {
+        return $this->belongsTo('App\Models\Province');
+    }
+
+    public function city() {
+        return $this->belongsTo('App\Models\City');
+    }
 }
