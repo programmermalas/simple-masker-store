@@ -89,8 +89,8 @@ class PaymentController extends Controller
     }
 
     public function table( Request $request ) {
-        $data   = Payment::whereHas('order', function ( $order ) {
-                $order->where('status', '!=', 'paid');
+        $data   = Payment::with('order')->whereHas('order', function ( $order ) {
+                $order->where('status', 'payment_confirmation');
             })
             ->orderByDesc('created_at')
             ->get();
