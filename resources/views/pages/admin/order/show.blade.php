@@ -79,12 +79,12 @@
 
                     <tr>
                         <td>Province</td>
-                        <td>{{ $order->province_id }}</td>
+                        <td>{{ $order->province->name }}</td>
                     </tr>
 
                     <tr>
                         <td>City</td>
-                        <td>{{ $order->city_id }}</td>
+                        <td>{{ $order->city->name }}</td>
                     </tr>
                     
                     <tr>
