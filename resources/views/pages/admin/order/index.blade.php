@@ -28,7 +28,8 @@
                                 <th scope="col">City</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Marketing</th>
+                                <th scope="col">Update</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -132,12 +133,13 @@
                     {data: 'city', name: 'city'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'status', name: 'status'},
-                    {data: 'date', name: 'date'},
+                    {data: 'marketing', name: 'marketing'},
+                    {data: 'update', name: 'update'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 5, 6, 7, 8], 
+                        targets: [0, 5, 6, 7, 8, 9], 
                         className: 'text-center align-middle no-wrap'
                     },
                     {

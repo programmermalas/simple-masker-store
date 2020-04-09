@@ -15,6 +15,7 @@ use App\Models\Bill;
 use App\Models\OrderProduct;
 use App\Models\Province;
 use App\Models\City;
+use App\User;
 
 class OrderController extends Controller
 {
@@ -57,6 +58,7 @@ class OrderController extends Controller
         $request->validate([
             'first_name'    => 'required|max:25',
             'last_name'     => 'required|max:25',
+            'recipients'    => 'max:50',
             'province'      => 'required',
             'city'          => 'required',
             'street'        => 'required|max:150',
@@ -71,6 +73,14 @@ class OrderController extends Controller
         try {
             $count      = Order::withTrashed()->count();
             $invoice    = Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+
+            if ( $request->marketing ) {
+                $user   = User::where('name', $request->marketing)->first();
+
+                if ( !$user ) {
+                    return redirect()->back()->with('info', 'User marketing not found!');
+                }
+            }
             
             $dataCity   = $this->getCity( $request->city );
 
@@ -86,9 +96,11 @@ class OrderController extends Controller
         
             $order = Order::create([
                 'id'            => Str::uuid(),
+                'user_id'       => $user->id,
                 'invoice'       => $invoice,
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
+                'recipients'    => $request->recipients,
                 'province_id'   => $province->id,
                 'city_id'       => $city->id,
                 'street'        => $request->street,

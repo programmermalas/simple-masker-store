@@ -143,10 +143,13 @@ class OrderController extends Controller
 
                 return $badge;
             })
+            ->addColumn('marketing', function ( $order ) {
+                return $order->user ? $order->user->name : null;
+            })
             ->addColumn('quantity', function ( $order ) {
                 return $order->orderProducts()->sum('quantity');
             })
-            ->addColumn('date', function ( $order ) {
+            ->addColumn('update', function ( $order ) {
                 return $order->updated_at->diffForHumans();
             })
             ->addColumn('action', function( $order ) {
