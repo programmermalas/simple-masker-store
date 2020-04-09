@@ -22,7 +22,7 @@ Route::get('/provinces', function () {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+        CURLOPT_URL => "https://pro.rajaongkir.com/api/province",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -50,7 +50,7 @@ Route::get('/provinces/{id}', function ( $id ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.rajaongkir.com/starter/city?province=$id",
+    CURLOPT_URL => "https://pro.rajaongkir.com/api/city?province=$id",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -78,7 +78,7 @@ Route::get('/province/{id}', function ( $id ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=$id",
+    CURLOPT_URL => "https://pro.rajaongkir.com/api/province?id=$id",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -106,7 +106,7 @@ Route::get('/city/{id}', function ( $id ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.rajaongkir.com/starter/city?id=$id",
+    CURLOPT_URL => "https://pro.rajaongkir.com/api/city?id=$id",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -134,7 +134,7 @@ Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+        CURLOPT_URL => "https://pro.rajaongkir.com/api/cost",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
