@@ -87,8 +87,8 @@ class OrderController extends Controller
 
         try {
             $order->update([
-                'first_name'=> $reqiest->first_name,
-                'last_name' => $reqiest->last_name,
+                'first_name'=> $request->first_name,
+                'last_name' => $request->last_name,
                 'resi'      => $request->resi,
                 'status'    => $request->status
             ]);
@@ -112,7 +112,7 @@ class OrderController extends Controller
                 }
             })
             ->where('status', '!=', 'canceled')
-            ->orderByDesc('created_at')
+            ->orderByDesc('updated_at')
             ->get();
 
         $table  = Datatables::of($data)
@@ -126,11 +126,28 @@ class OrderController extends Controller
             ->addColumn('city', function ( $order ) {
                 return $order->city->name;
             })
+            ->addColumn('status', function( $order ) {
+                $badge = '<span class="badge badge-pill badge-danger"> Canceled </span>';
+
+                if ( $order->status == 'waited' ) {
+                    $badge = '<span class="badge badge-pill badge-primary"> Waited </span>';
+                } elseif ( $order->status == 'payment_confirmation' ) {
+                    $badge = '<span class="badge badge-pill badge-warning"> Payment Confirmation </span>';
+                } elseif ( $order->status == 'paid' ) {
+                    $badge = '<span class="badge badge-pill badge-light"> Paid </span>';
+                } elseif ( $order->status == 'sended' ) {
+                    $badge = '<span class="badge badge-pill badge-success"> Sended </span>';
+                } elseif ( $order->status == 'delivered' ) {
+                    $badge = '<span class="badge badge-pill badge-secondary"> Delivered </span>';
+                }
+
+                return $badge;
+            })
             ->addColumn('quantity', function ( $order ) {
                 return $order->orderProducts()->sum('quantity');
             })
             ->addColumn('date', function ( $order ) {
-                return $order->created_at->diffForHumans();
+                return $order->updated_at->diffForHumans();
             })
             ->addColumn('action', function( $order ) {
                     $btn = '
@@ -145,7 +162,7 @@ class OrderController extends Controller
 
                     return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
             ->make(true);
         
         return $table;
