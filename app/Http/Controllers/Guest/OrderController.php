@@ -15,6 +15,8 @@ use App\Models\Bill;
 use App\Models\OrderProduct;
 use App\Models\Province;
 use App\Models\City;
+use App\Models\SubDistrict;
+use App\Models\Courier;
 use App\User;
 
 class OrderController extends Controller
@@ -24,12 +26,12 @@ class OrderController extends Controller
         return abort(404);
     }
 
-    public function getCity( $id )
+    public function getSubDistrict( $city, $subdistrict )
     {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://pro.rajaongkir.com/api/city?id=$id",
+        CURLOPT_URL => "https://pro.rajaongkir.com/api/subdistrict?city=$city&id=$subdistrict",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -61,6 +63,10 @@ class OrderController extends Controller
             'recipients'    => 'max:50',
             'province'      => 'required',
             'city'          => 'required',
+            'subdistrict'   => 'required',
+            'code_courier'  => 'required',
+            'name_courier'  => 'required',
+            'name_service'  => 'required',
             'street'        => 'required|max:150',
             'postcode'      => 'required|max:10',
             'phone'         => 'required|max:15',
@@ -71,8 +77,14 @@ class OrderController extends Controller
         ]);
     
         try {
+            if ( Cart::getTotalQuantity() < 100 ) {
+                return redirect()->back()->with('info', 'Minimal order 100!');
+            }
+            
             $count      = Order::withTrashed()->count();
             $invoice    = Carbon::now()->format('d/m/Y/') . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+
+            $user = null;
 
             if ( $request->marketing ) {
                 $user   = User::where('name', $request->marketing)->first();
@@ -82,27 +94,39 @@ class OrderController extends Controller
                 }
             }
             
-            $dataCity   = $this->getCity( $request->city );
+            $dataSubDistrict   = $this->getSubDistrict( $request->city, $request->subdistrict );
 
             $province   = Province::firstOrCreate([
-                'id'    => $dataCity['rajaongkir']['results']['province_id'],
-                'name'  => $dataCity['rajaongkir']['results']['province']
+                'id'    => $dataSubDistrict['rajaongkir']['results']['province_id'],
+                'name'  => $dataSubDistrict['rajaongkir']['results']['province']
             ]);
 
             $city   = City::firstOrCreate([
-                'id'    => $dataCity['rajaongkir']['results']['city_id'],
-                'name'  => $dataCity['rajaongkir']['results']['city_name']
+                'id'    => $dataSubDistrict['rajaongkir']['results']['city_id'],
+                'name'  => $dataSubDistrict['rajaongkir']['results']['city']
+            ]);
+
+            $subdistrict   = SubDistrict::firstOrCreate([
+                'id'    => $dataSubDistrict['rajaongkir']['results']['subdistrict_id'],
+                'name'  => $dataSubDistrict['rajaongkir']['results']['subdistrict_name']
             ]);
         
+            $courier    = Courier::firstOrCreate([
+                'code'      => $request->code_courier,
+                'name'      => $request->name_courier,
+                'service'   => $request->name_service
+            ]);
+
             $order = Order::create([
                 'id'            => Str::uuid(),
-                'user_id'       => $user->id,
+                'user_id'       => $user ? $user->id : null,
                 'invoice'       => $invoice,
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
                 'recipients'    => $request->recipients,
                 'province_id'   => $province->id,
                 'city_id'       => $city->id,
+                'subdistrict_id'=> $subdistrict->id,
                 'street'        => $request->street,
                 'postcode'      => $request->postcode,
                 'phone'         => $request->phone,
@@ -112,6 +136,7 @@ class OrderController extends Controller
             Bill::create([
                 'id'        => Str::uuid(),
                 'order_id'  => $order->id,
+                'courier_id'=> $courier->id,
                 'shipping'  => $request->shipping,
                 'weight'    => $request->weight,
                 'total'     => $request->total

@@ -38,4 +38,8 @@ class Order extends Model
     public function city() {
         return $this->belongsTo('App\Models\City');
     }
+
+    public function subDistrict() {
+        return $this->belongsTo('App\Models\SubDistrict');
+    }
 }

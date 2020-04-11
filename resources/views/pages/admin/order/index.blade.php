@@ -26,6 +26,7 @@
                                 <th scope="col">Buyer</th>
                                 <th scope="col">Province</th>
                                 <th scope="col">City</th>
+                                <th scope="col">Courier</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Marketing</th>
@@ -131,6 +132,7 @@
                     {data: 'buyer', name: 'buyer'},
                     {data: 'province', name: 'province'},
                     {data: 'city', name: 'city'},
+                    {data: 'courier', name: 'courier'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'status', name: 'status'},
                     {data: 'marketing', name: 'marketing'},
@@ -139,7 +141,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 5, 6, 7, 8, 9], 
+                        targets: [0, 5, 6, 7, 8, 9, 10], 
                         className: 'text-center align-middle no-wrap'
                     },
                     {

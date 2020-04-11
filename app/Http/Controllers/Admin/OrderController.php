@@ -106,7 +106,7 @@ class OrderController extends Controller
     }
 
     public function table( Request $request ) {
-        $data   = Order::where(function ( $order ) use ($request) {
+        $data   = Order::with('bill.courier')->where(function ( $order ) use ($request) {
                 $date = $request->date ? Carbon::createFromFormat( 'd/m/Y', $request->date ) : null;
 
                 if ( $request->date && $request->status ) {
@@ -131,6 +131,12 @@ class OrderController extends Controller
             })
             ->addColumn('city', function ( $order ) {
                 return $order->city->name;
+            })
+            ->addColumn('courier', function ( $order ) {
+                $name = $order->bill->courier->name ?? null;
+                $service = $order->bill->courier->service ?? null;
+
+                return $name . ' ' . $service;
             })
             ->addColumn('status', function( $order ) {
                 $badge = '<span class="badge badge-pill badge-danger"> Canceled </span>';

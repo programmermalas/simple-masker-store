@@ -87,6 +87,54 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="subdistrict">SubDistrict</label>
+
+                    <select name="subdistrict" class="custom-select @if ($errors->has('subdistrict')) is-invalid @endif" id="subdistrict">
+                        <option>Select SubDistrict</option>
+                    </select>
+
+                    @if ($errors->has('subdistrict'))
+                        <div class="invalid-feedback">
+                            {{$errors->first('subdistrict')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="courier">Courier</label>
+    
+                        <select name="code_courier" class="custom-select @if ($errors->has('courier')) is-invalid @endif" id="courier">
+                            <option value="">Select Courier</option>
+                        </select>
+
+                        <input type="hidden" name="name_courier">
+
+                        @if ($errors->has('courier'))
+                            <div class="invalid-feedback">
+                                {{$errors->first('courier')}}
+                            </div>
+                        @endif
+                    </div>
+    
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="courier">Service</label>
+    
+                        <select name="price_service" class="custom-select @if ($errors->has('service')) is-invalid @endif" id="service">
+                            <option value="">Select Service</option>
+                        </select>
+
+                        <input type="hidden" name="name_service">
+    
+                        @if ($errors->has('service'))
+                            <div class="invalid-feedback">
+                                {{$errors->first('service')}}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="street">Street Address</label>
 
                     <input name="street" type="text" class="form-control @if ($errors->has('street')) is-invalid @endif" id="street" aria-describedby="street" value="{{ old('street') }}">
@@ -173,12 +221,15 @@
 
                         <tr>
                             <td>Weight</td>
-                            <td><input type="hidden" name="weight" value="{{ $weight }}"><span id="weight">{{ $weight }}</span> Gram</td>
+                            <td>
+                                <span id="weight">{{ $weight / 1000 }}</span> Kg
+                                <input type="hidden" name="weight" value="{{ $weight }}">
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Shipping</td>
-                            <td>Rp <input type="hidden" name="shipping"><span id="shipping"></span></td>
+                            <td>Rp <input type="hidden" name="shipping"><span id="shipping">0</span></td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -199,12 +250,13 @@
 <script>
     $(function () {
         $('select[name="city"]').prop('disabled', true);
-        $('#shipping').html(0);
+        $('select[name="subdistrict"]').prop('disabled', true);
+        $('select[name="code_courier"]').prop('disabled', true);
+        $('select[name="price_service"]').prop('disabled', true);
+
         let total = $('#total').html();
         $('input[name="total"]').val( total );
         $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
-
-        let provinces = [];
 
         $.get('/api/provinces', function ( data ) {
             $('select[name="province"]').empty().append( new Option( 'Select Province', null ) );
@@ -215,11 +267,15 @@
         });
 
         $('select[name="province"]').change(function () {
-            if ( $(this).val() === 'null' ) {
-                $('select[name="city"]').prop('disabled', true);
-            }
-
             $('select[name="city"]').empty().append( new Option( 'Select City', null ) );
+            $('select[name="subdistrict"]').empty().append( new Option( 'Select SubDistrict', null ) );
+            $('select[name="code_courier"]').empty().append( new Option( 'Select Courier', null ) );
+            $('select[name="price_service"]').empty().append( new Option( 'Select Service', null ) );
+
+            $('select[name="city"]').prop('disabled', true);
+            $('select[name="subdistrict"]').prop('disabled', true);
+            $('select[name="code_courier"]').prop('disabled', true);
+            $('select[name="price_service"]').prop('disabled', true);
 
             if ( $(this).val() !== 'null' ) {
                 $.get('/api/province/' + $(this).val(), function ( data ) {
@@ -237,19 +293,91 @@
         });
 
         $('select[name="city"]').change(function () {
-            $.get('/api/cost/' + $(this).val() + '/' + $('#weight').html(), function ( data ) {
-                $('#shipping').html(0);
+            $('select[name="subdistrict"]').empty().append( new Option( 'Select SubDistrict', null ) );
+            $('select[name="code_courier"]').empty().append( new Option( 'Select Courier', null ) );
+            $('select[name="price_service"]').empty().append( new Option( 'Select Service', null ) );
 
-                if (data.rajaongkir.results) {
-                    let shipping = data.rajaongkir.results[0].costs[1].cost[0].value;
-                    let totals = parseInt( total ) + data.rajaongkir.results[0].costs[1].cost[0].value;
+            $('select[name="subdistrict"]').prop('disabled', true);
+            $('select[name="code_courier"]').prop('disabled', true);
+            $('select[name="price_service"]').prop('disabled', true);
 
-                    $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
-                    $('input[name="shipping"]').val( shipping );
-                    $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
-                    $('input[name="total"]').val( totals );
-                }
-            });
+            if ( $(this).val() !== 'null' ) {
+                $.get('/api/subdistrict/' + $(this).val(), function ( data ) {
+                    if ( data.rajaongkir.results ) {
+                        $('select[name="subdistrict"]').prop('disabled', false);
+
+                        $.map( data.rajaongkir.results, function ( value, index ) {
+                            $('select[name="subdistrict"]').append( new Option( value.subdistrict_name, value.subdistrict_id ) );
+                        });
+                    }
+                });
+            }
+        });
+
+        let subdistrict = null;
+
+        $('select[name="subdistrict"]').change(function () {
+            $('select[name="code_courier"]').prop('disabled', false).empty().append( 
+                new Option( 'Select Courier', null ), 
+                new Option( 'JNE', 'jne' ),
+                new Option( 'JNT', 'jnt' ),
+                new Option( 'TIKI', 'tiki' ),
+                new Option( 'Lion Parcel', 'lion' ),
+            );
+            $('select[name="price_service"]').empty().append( new Option( 'Select Service', null ) );
+
+            $('select[name="code_courier"]').prop('disabled', true);
+            $('select[name="price_service"]').prop('disabled', true);
+
+            if ( $(this).val() !== 'null' ) {
+                $('select[name="code_courier"]').prop('disabled', false);
+
+                subdistrict = $(this).val();
+            }
+        });
+
+        $('select[name="code_courier"]').change(function () {
+            $('select[name="price_service"]').empty().append( new Option( 'Select Service', null ) );
+
+            $('select[name="price_service"]').prop('disabled', true);
+
+            $('input[name="name_courier"]').val("");
+
+            if ( $(this).val() !== 'null' ) {
+                $('input[name="name_courier"]').val($('select[name="code_courier"] option:selected').text());
+
+                $.get('/api/cost/' + subdistrict + '/' + $('input[name="weight"]').val() + '/' + $(this).val(), function ( data ) {
+                    if (data.rajaongkir.results) {
+                        $('select[name="price_service"]').prop('disabled', false);
+                        $.map( data.rajaongkir.results, function ( value, index ) {
+                            $.map( value.costs, function ( value, index ) {
+                                $('select[name="price_service"]').append( new Option( value.description + `(${value.service})`, value.cost[0].value ) );
+                            } );
+                        });
+                    }
+                });
+            }
+        });
+        
+        $('select[name="price_service"]').change(function () {
+            let shipping = null;
+            let totals = null;
+
+            if ( $(this).val() === 'null' ) {
+                shipping = 0;
+                totals = 0;
+
+                $('input[name="name_service"]').val("");
+            }
+
+            $('input[name="name_service"]').val($('select[name="price_service"] option:selected').text());
+            shipping = $(this).val();
+            totals = parseInt( total ) + parseInt( shipping );
+
+            $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
+            $('input[name="shipping"]').val( shipping );
+            $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
+            $('input[name="total"]').val( totals );
         });
     });
 </script>

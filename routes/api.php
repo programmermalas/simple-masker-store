@@ -74,11 +74,11 @@ Route::get('/province/{id}', function ( $id ) {
     }
 });
 
-Route::get('/city/{id}', function ( $id ) {
+Route::get('/subdistrict/{id}', function ( $id ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://pro.rajaongkir.com/api/city?id=$id",
+    CURLOPT_URL => "https://pro.rajaongkir.com/api/subdistrict?city=$id",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -102,7 +102,7 @@ Route::get('/city/{id}', function ( $id ) {
     }
 });
 
-Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
+Route::get('/cost/{destination}/{weight}/{courier}', function ( $destination, $weight, $courier ) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -113,7 +113,7 @@ Route::get('/cost/{destination}/{weight}', function ( $destination, $weight ) {
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "origin=398&originType=city&destination=$destination&destinationType=city&weight=$weight&courier=jne",
+        CURLOPT_POSTFIELDS => "origin=5490&originType=subdistrict&destination=$destination&destinationType=subdistrict&weight=$weight&courier=$courier",
         CURLOPT_HTTPHEADER => array(
             "content-type: application/x-www-form-urlencoded",
             "key: " . env('API_KEY_RAJAONGKIR', null)

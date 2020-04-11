@@ -39,6 +39,10 @@
             <ul class="list-unstyled">
                 <li>Order number: {{ $order->invoice }}</li>
                 <li>Date: {{ $order->created_at->format('d/m/Y') }}</li>
+                <li>Courier: {{ $order->bill->courier->name }} ({{ $order->bill->courier->service }})</li>
+                <li>Total Quantity: {{ $order->orderProducts->sum('quantity') }}</li>
+                <li>Shipping: Rp {{ number_format( $order->bill->shipping, 0, '.', ',' ) }}</li>
+                <li>Total Price: Rp {{ number_format( $order->bill->total, 0, '.', ',' ) }}</li>
                 <li>Payment method: Bank Mandiri 136-00-1601-7664 a/n PT. Sahabat Unggul International</li>
             </ul>
 

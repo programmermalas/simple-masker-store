@@ -48,7 +48,11 @@
                     </tr>
                     <tr>
                         <td>Weight</td>
-                        <td>{{ number_format( $order->bill->weight, 0, '.', ',' ) }} Gram</td>
+                        <td>{{ $order->bill->weight / 1000 }} Kg</td>
+                    </tr>
+                    <tr>
+                        <td>Courier</td>
+                        <td>{{ $order->bill->courier ? ($order->bill->courier->name . ' ' . $order->bill->courier->service) : null }}</td>
                     </tr>
                     <tr>
                         <td>Shipping </td>
