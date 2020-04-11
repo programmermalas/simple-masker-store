@@ -25,12 +25,12 @@
                 
                                     <tr>
                                         <td>Province</td>
-                                        <td>{{ $order->province() }}</td>
+                                        <td>{{ $order->province->name }}</td>
                                     </tr>
                 
                                     <tr>
                                         <td>City</td>
-                                        <td>{{ $order->city() }}</td>
+                                        <td>{{ $order->city->name }}</td>
                                     </tr>
                                     
                                     <tr>
@@ -67,7 +67,51 @@
                         </div>
                     </div>
                 </div>
-                
+
+                @if ($wayBill != null && json_decode($wayBill)->rajaongkir->status->code != 400)
+                <div class="pt-3">
+                    <div class="card">
+                        <div class="card-header">
+                        Shipment Tracking
+                        </div>
+
+                        <div class="card-body">
+                            <div class="card-text">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                            <th>City</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (json_decode($wayBill)->rajaongkir->result->manifest as $manifest)
+                                            <tr>
+                                                <td>{{ $manifest->manifest_description }}</td>
+                                                <td>{{ $manifest->manifest_date }}</td>
+                                                <td>{{ $manifest->city_name }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <div class="pt-3">
+                    <div class="card">
+                        <div class="card-body">
+                            @if ($order->status != 'sended')
+                                Order on process
+                            @else
+                                Shipment on process
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
             @else
             <div class="pt-3">
                 @include('partials._alerts')

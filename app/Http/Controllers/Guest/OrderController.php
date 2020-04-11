@@ -163,6 +163,36 @@ class OrderController extends Controller
         return view( 'pages.guest.order.index', compact('order') );
     }
 
+    public function getWaybill( $resi, $courier ) {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://pro.rajaongkir.com/api/waybill",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "waybill=$resi&courier=$courier",
+            CURLOPT_HTTPHEADER => array(
+                "content-type: application/x-www-form-urlencoded",
+                "key: " . env('API_KEY_RAJAONGKIR', null)
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return "cURL Error #:" . $err;
+        } else {
+            return $response;
+        }
+    }
+
     public function detail( Request $request )
     {
         if ( $request->invoice ) {
@@ -171,8 +201,14 @@ class OrderController extends Controller
             if (!$order) {
                 return redirect( '/order/detail' )->with('info', 'Order not found!');
             }
+
+            $wayBill = null;
+
+            if ( $order->bill->courier ) { 
+                $wayBill    = $this->getWaybill( $order->resi, $order->bill->courier->code );
+            }
         }
-    
-        return view( 'pages.guest.order.detail', compact('order') );
+
+        return view( 'pages.guest.order.detail', compact('order', 'wayBill') );
     }
 }
