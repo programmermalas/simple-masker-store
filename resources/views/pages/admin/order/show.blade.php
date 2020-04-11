@@ -95,6 +95,11 @@
                         <td>City</td>
                         <td>{{ $order->city->name }}</td>
                     </tr>
+
+                    <tr>
+                        <td>SubDistrict</td>
+                        <td>{{ $order->subDistrict->name ?? null }}</td>
+                    </tr>
                     
                     <tr>
                         <td>Street</td>

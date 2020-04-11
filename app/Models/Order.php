@@ -40,6 +40,6 @@ class Order extends Model
     }
 
     public function subDistrict() {
-        return $this->belongsTo('App\Models\SubDistrict');
+        return $this->belongsTo('App\Models\SubDistrict', 'subdistrict_id');
     }
 }
