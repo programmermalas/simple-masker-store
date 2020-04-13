@@ -61,9 +61,11 @@
                         </td>
                         <td style="text-align: right;">
                             @php
-                                $total += $data->bill->total;
+                                if ( $data->bill ) {
+                                    $total += $data->bill->total;
+                                }
                             @endphp
-                            {{ number_format( $data->bill->total, 0, '.', ',' ) }}
+                            {{ number_format( $data->bill->total ?? 0 , 0, '.', ',' ) }}
                         </td>
                     </tr>
                 @endforeach

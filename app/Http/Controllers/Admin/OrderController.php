@@ -187,10 +187,13 @@ class OrderController extends Controller
         try {
             $date = null;
 
+            if ( $request->date ) {
+                $date   = Carbon::createFromFormat('d/m/Y', $request->date);
+            }
+
             $datas  = Order::with('orderProducts')
-                ->where(function ( $order ) use ( $request ) {
-                    if ( $request->date ) {
-                        $date   = Carbon::createFromFormat('d/m/Y', $request->date);
+                ->where(function ( $order ) use ( $date ) {
+                    if ( $date ) {
                         $order->whereDate('created_at', $date);
                     }
                 })
