@@ -122,6 +122,11 @@
                     </tr>
 
                     <tr>
+                        <td>Marketing</td>
+                        <td>{{ $order->user->name ??  null }}</td>
+                    </tr>
+
+                    <tr>
                         <td>Resi</td>
                         <td>{{ $order->resi ?? 'On Process' }}</td>
                     </tr>
