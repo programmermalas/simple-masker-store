@@ -149,13 +149,13 @@ class ProductController extends Controller
                 'weight'        => $request->weight
             ]);
 
+            
             if ( $request->hasFile('image') ) {
                 $fileName   = $this->uploadImage( $request->file('image'), $product->title );
 
                 $product->productImage()->updateOrCreate([
                     'product_id'    => $product->id,
                 ],[
-                    'id'            => Str::uuid(),
                     'name'          => $fileName,
                     'dimentions'    => implode('|', $this->dimentions),
                     'path'          => $this->path
