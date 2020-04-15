@@ -5,6 +5,9 @@
     </head>
 
     <style>
+        @page {
+            margin-top: 0px;
+        }
         .table {
             font-size: .6rem;
             width: 100%;
