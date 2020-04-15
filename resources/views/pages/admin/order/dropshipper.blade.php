@@ -14,7 +14,6 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Product</th>
-                        <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
                     </tr>
                 </thead>
@@ -28,7 +27,6 @@
                     <tr>
                         <th scope="row">{{ ++$no }}</th>
                         <td>{{ $orderProduct->product->title }}</td>
-                        <td>Rp {{ number_format( $orderProduct->product->price, 0, '.', ',' ) }}</td>
                         <td>{{ $orderProduct->quantity }}</td>
                     </tr>
                     @endif
