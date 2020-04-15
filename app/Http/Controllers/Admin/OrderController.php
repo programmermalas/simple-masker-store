@@ -59,6 +59,17 @@ class OrderController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function dropshipper(Order $order)
+    {
+        return view('pages.admin.order.dropshipper', compact('order'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -171,6 +182,10 @@ class OrderController extends Controller
                         </a>
 
                         <a href="' . route( 'admin.order.show', $order->id ) . '" class="btn btn-sm btn-primary rounded-circle">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                        <a href="' . route( 'admin.order.dropshipper', $order->id ) . '" class="btn btn-sm btn-secondary rounded-circle">
                             <i class="fas fa-eye"></i>
                         </a>
                     ';
