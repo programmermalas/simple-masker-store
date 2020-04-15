@@ -74,7 +74,7 @@
                 @endforeach
                 <tr>
                     <td colspan="8" style="text-align: center;">Total</td>
-                    <td style="text-align: center;">{{ $quantity }}</td>
+                    <td style="text-align: center;">{{ number_format( $quantity, 0, '.', ',' ) }}</td>
                     <td style="text-align: center;">{{ number_format( $total, 0, '.', ',' ) }}</td>
                 </tr>
             </tbody>
