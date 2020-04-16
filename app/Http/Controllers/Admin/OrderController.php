@@ -97,6 +97,16 @@ class OrderController extends Controller
         ]);
 
         try {
+            if ($request->courier) {
+                $shipping   = $order->bill->shipping;
+                $total      = $order->bill->total - $order->bill->shipping;
+
+                $order->bill->update([
+                    'shipping'  => 0,
+                    'total'     => $total,
+                ]);
+            }
+
             if ( $order->status != 'waited' && $order->status != 'sended' && $order->status != 'delivered' ) {
                 foreach ( $order->orderProducts as $orderProduct ) {
                     $orderProduct->product->increment( 'stock', $orderProduct->quantity );

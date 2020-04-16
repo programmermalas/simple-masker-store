@@ -54,6 +54,11 @@
                             @endif
                         </div>
 
+                        <div class="custom-control custom-checkbox">
+                            <input name="courier" type="checkbox" class="custom-control-input" id="courier">
+                            <label class="custom-control-label" for="courier">Without courier services</label>
+                        </div>
+
                         <div class="form-group">
                             <label for="status">Status</label>
         
