@@ -62,6 +62,7 @@
 
     <div class="row pt-0 pt-md-3">
         @foreach ($products as $product)
+        @if ( $product->stock >= 0 )
         <div class="col-sm-12 col-md-6 col-lg-3 pt-3 pb-3 pt-md-0">
             <div class="card shadow-sm">
                 <a href="{{ url("/product/{$product->slug}") }}" class="text-decoration-none text-reset">
@@ -82,11 +83,6 @@
                 </a>
 
                 <div class="card-footer">
-                    @if ( $product->stock <= 0 )
-                    <div class="card-text text-center text-muted">
-                        <h5>Out of Stock</h5>
-                    </div>
-                    @else
                     <form action="{{ url("/product/{$product->slug}") }}" method="post">
                         @csrf
                         
@@ -100,10 +96,10 @@
                             </div>
                         </div>
                     </form>
-                    @endif
                 </div>
             </div>
         </div>
+        @endif
         @endforeach
     </div>
 </div>
