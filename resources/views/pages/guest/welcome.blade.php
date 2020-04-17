@@ -62,7 +62,7 @@
 
     <div class="row pt-0 pt-md-3">
         @foreach ($products as $product)
-        @if ( $product->stock >= 0 )
+        @if ( $product->stock > 0 )
         <div class="col-sm-12 col-md-6 col-lg-3 pt-3 pb-3 pt-md-0">
             <div class="card shadow-sm">
                 <a href="{{ url("/product/{$product->slug}") }}" class="text-decoration-none text-reset">
