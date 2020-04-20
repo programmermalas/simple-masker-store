@@ -123,7 +123,7 @@ class OrderController extends Controller
                 'invoice'       => $invoice,
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
-                'recipients'    => $request->recipients,
+                'recipients'    => $request->recipients_name,
                 'province_id'   => $province->id,
                 'city_id'       => $city->id,
                 'subdistrict_id'=> $subdistrict->id,
@@ -178,8 +178,8 @@ class OrderController extends Controller
             CURLOPT_HTTPHEADER => array(
                 "content-type: application/x-www-form-urlencoded",
                 "key: " . env('API_KEY_RAJAONGKIR', null)
-           ),
-       ));
+            ),
+        ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
