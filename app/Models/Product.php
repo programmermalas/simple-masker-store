@@ -20,10 +20,10 @@ class Product extends Model
     }
 
     public function productImage() {
-        return $this->hasOne('App\Models\ProductImage');
+        return $this->hasOne('App\Models\ProductImage', 'product_id');
     }
 
     public function orderProducts() {
-        return $this->hasMany('App\Models\OrderProduct');
+        return $this->hasMany('App\Models\OrderProduct', 'product_id');
     }
 }

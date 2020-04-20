@@ -20,7 +20,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view( 'pages.admin.payment.index' );
+        return view('pages.admin.payment.index');
     }
 
     /**
@@ -31,7 +31,7 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        return view( 'pages.admin.payment.edit', compact('payment') );
+        return view('pages.admin.payment.edit', compact('payment'));
     }
 
     /**
@@ -48,28 +48,28 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $order  = Order::with( 'orderProducts.product' )->where( 'id', $request->id )->first();
+            $order  = Order::with('orderProducts.product')->where('id', $request->id)->first();
 
-            if ( $order->status == 'paid' ) {
-                return redirect()->back()->with( 'info', 'Payment already paid!' );
+            if ($order->status == 'paid') {
+                return redirect()->back()->with('info', 'Payment already paid!');
             }
 
-            if ( $order->status == 'sended' ) {
-                return redirect()->back()->with( 'info', 'Payment already sended!' );
+            if ($order->status == 'sended') {
+                return redirect()->back()->with('info', 'Payment already sended!');
             }
 
-            if ( $order->status == 'delivered' ) {
-                return redirect()->back()->with( 'info', 'Payment already delivered!' );
+            if ($order->status == 'delivered') {
+                return redirect()->back()->with('info', 'Payment already delivered!');
             }
 
-            if ( $order->status == 'canceled' ) {
-                return redirect()->back()->with( 'info', 'Payment already canceled!' );
+            if ($order->status == 'canceled') {
+                return redirect()->back()->with('info', 'Payment already canceled!');
             }
 
-            foreach ( $order->orderProducts as $orderProduct ) {
+            foreach ($order->orderProducts as $orderProduct) {
                 $subQuantity = $orderProduct->product->stock - $orderProduct->quantity;
 
-                if ( $subQuantity < 0 ) {
+                if ($subQuantity < 0) {
                     $subQuantity = 0;
                 }
 
@@ -82,14 +82,14 @@ class PaymentController extends Controller
                 'status'    => 'paid'
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with( 'error', $e->getMessage() );
+            return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back()->with( 'info', 'Payment received!' );
+        return redirect()->back()->with('info', 'Payment received!');
     }
 
-    public function table( Request $request ) {
-        $data   = Payment::with('order')->whereHas('order', function ( $order ) {
+    public function table(Request $request) {
+        $data   = Payment::with('order')->whereHas('order', function ($order) {
                 $order->where('status', 'payment_confirmation');
             })
             ->orderByDesc('created_at')
@@ -97,18 +97,18 @@ class PaymentController extends Controller
 
         $table  = Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('invoice', function ( $payment ) {
+            ->addColumn('invoice', function ($payment) {
                 return $payment->order->invoice;
             })
-            ->addColumn('nominal', function ( $payment ) {
-                return 'Rp ' . number_format( $payment->nominal, 0, '.', ',' );
+            ->addColumn('nominal', function ($payment) {
+                return 'Rp ' . number_format($payment->nominal, 0, '.', ',');
             })
-            ->addColumn('date', function ( $payment ) {
+            ->addColumn('date', function ($payment) {
                 return $payment->created_at->diffForHumans();
             })
-            ->addColumn('action', function( $payment ) {
+            ->addColumn('action', function($payment) {
                     $btn = '
-                        <a href="' . route( 'admin.payment.edit', $payment->id ) . '" class="btn btn-sm btn-primary rounded-circle">
+                        <a href="' . route('admin.payment.edit', $payment->id) . '" class="btn btn-sm btn-primary rounded-circle">
                             <i class="fas fa-edit"></i>
                         </a>
                     ';

@@ -16,6 +16,6 @@ class Courier extends Model
     public $incrementing = false;
 
     public function bills() {
-        return $this->hasMany('App\Models\Bill');
+        return $this->hasMany('App\Models\Bill', 'courier_id');
     }
 }

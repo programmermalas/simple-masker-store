@@ -14,10 +14,10 @@ class Bill extends Model
     ];
 
     public function order() {
-        return $this->belongsTo('App\Models\Order');
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
     public function courier() {
-        return $this->belongsTo('App\Models\Courier');
+        return $this->belongsTo('App\Models\Courier', 'courier_id');
     }
 }

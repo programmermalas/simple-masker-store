@@ -16,6 +16,6 @@ class PaymentImage extends Model
     public $incrementing = false;
 
     public function payment() {
-        return $this->belongsTo('App\Models\Payment');
+        return $this->belongsTo('App\Models\Payment', 'payment_id');
     }
 }

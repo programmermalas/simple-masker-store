@@ -16,6 +16,6 @@ class SubDistrict extends Model
     public $incrementing = false;
 
     public function orders() {
-        return $this->hasMany('App\Models\Order');
+        return $this->hasMany('App\Models\Order', 'sub_district_id');
     }
 }

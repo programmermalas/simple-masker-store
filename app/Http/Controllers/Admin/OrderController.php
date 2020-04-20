@@ -97,6 +97,10 @@ class OrderController extends Controller
         ]);
 
         try {
+            $order->bill->update([
+                'total'     => $request->total
+            ]);
+
             if ($request->courier) {
                 $shipping   = $order->bill->shipping;
                 $total      = $order->bill->total - $order->bill->shipping;
@@ -107,9 +111,9 @@ class OrderController extends Controller
                 ]);
             }
 
-            if ( $order->status != 'waited' && $order->status != 'sended' && $order->status != 'delivered' ) {
-                foreach ( $order->orderProducts as $orderProduct ) {
-                    $orderProduct->product->increment( 'stock', $orderProduct->quantity );
+            if ($order->status != 'waited' && $order->status != 'sended' && $order->status != 'delivered') {
+                foreach ($order->orderProducts as $orderProduct) {
+                    $orderProduct->product->increment('stock', $orderProduct->quantity);
                 }
             }
 
@@ -126,15 +130,15 @@ class OrderController extends Controller
         return redirect()->route('admin.order.index')->with('info', "Order $order->invoice updated!");
     }
 
-    public function table( Request $request ) {
-        $data   = Order::with('bill.courier')->where(function ( $order ) use ($request) {
-                $date = $request->date ? Carbon::createFromFormat( 'd/m/Y', $request->date ) : null;
+    public function table(Request $request) {
+        $data   = Order::with('province', 'city', 'bill.courier')->where(function ($order) use ($request) {
+                $date = $request->date ? Carbon::createFromFormat('d/m/Y', $request->date) : null;
 
-                if ( $request->date && $request->status ) {
+                if ($request->date && $request->status) {
                     return $order->whereDate('created_at', $date)->where('status', $request->status);
-                } elseif ( $request->date ) {
+                } elseif ($request->date) {
                     return $order->whereDate('created_at', $date);
-                } elseif ( $request->status ) {
+                } elseif ($request->status) {
                     return $order->where('status', $request->status);
                 }
             })
@@ -144,63 +148,63 @@ class OrderController extends Controller
 
         $table  = Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('buyer', function ( $order ) {
+            ->addColumn('buyer', function ($order) {
                 return $order->first_name . ' ' . $order->last_name;
             })
-            ->addColumn('province', function ( $order ) {
+            ->addColumn('province', function ($order) {
                 return $order->province->name;
             })
-            ->addColumn('city', function ( $order ) {
+            ->addColumn('city', function ($order) {
                 return $order->city->name;
             })
-            ->addColumn('courier', function ( $order ) {
+            ->addColumn('courier', function ($order) {
                 $name = $order->bill->courier->name ?? null;
                 $service = $order->bill->courier->service ?? null;
 
                 return $name . ' ' . $service;
             })
-            ->addColumn('status', function( $order ) {
+            ->addColumn('status', function($order) {
                 $badge = '<span class="badge badge-pill badge-danger"> Canceled </span>';
 
-                if ( $order->status == 'waited' ) {
+                if ($order->status == 'waited') {
                     $badge = '<span class="badge badge-pill badge-primary"> Waited </span>';
-                } elseif ( $order->status == 'payment_confirmation' ) {
+                } elseif ($order->status == 'payment_confirmation') {
                     $badge = '<span class="badge badge-pill badge-warning"> Payment Confirmation </span>';
-                } elseif ( $order->status == 'paid' ) {
+                } elseif ($order->status == 'paid') {
                     $badge = '<span class="badge badge-pill badge-light"> Paid </span>';
-                } elseif ( $order->status == 'sended' ) {
+                } elseif ($order->status == 'sended') {
                     $badge = '<span class="badge badge-pill badge-success"> Sended </span>';
-                } elseif ( $order->status == 'delivered' ) {
+                } elseif ($order->status == 'delivered') {
                     $badge = '<span class="badge badge-pill badge-secondary"> Delivered </span>';
                 }
 
                 return $badge;
             })
-            ->addColumn('marketing', function ( $order ) {
+            ->addColumn('marketing', function ($order) {
                 return $order->user ? $order->user->name : null;
             })
-            ->addColumn('quantity', function ( $order ) {
+            ->addColumn('quantity', function ($order) {
                 return $order->orderProducts()->sum('quantity');
             })
-            ->addColumn('update', function ( $order ) {
+            ->addColumn('update', function ($order) {
                 return $order->updated_at->diffForHumans();
             })
-            ->addColumn('action', function( $order ) {
-                    $btn = '
-                        <a href="' . route( 'admin.order.edit', $order->id ) . '" class="btn btn-sm btn-primary rounded-circle">
-                            <i class="fas fa-edit"></i>
-                        </a>
+            ->addColumn('action', function($order) {
+                $btn = '
+                    <a href="' . route('admin.order.edit', $order->id) . '" class="btn btn-sm btn-primary rounded-circle">
+                        <i class="fas fa-edit"></i>
+                    </a>
 
-                        <a href="' . route( 'admin.order.show', $order->id ) . '" class="btn btn-sm btn-primary rounded-circle">
-                            <i class="fas fa-eye"></i>
-                        </a>
+                    <a href="' . route('admin.order.show', $order->id) . '" class="btn btn-sm btn-primary rounded-circle">
+                        <i class="fas fa-eye"></i>
+                    </a>
 
-                        <a href="' . route( 'admin.order.dropshipper', $order->id ) . '" class="btn btn-sm btn-secondary rounded-circle">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    ';
+                    <a href="' . route('admin.order.dropshipper', $order->id) . '" class="btn btn-sm btn-secondary rounded-circle">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                ';
 
-                    return $btn;
+                return $btn;
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -208,26 +212,31 @@ class OrderController extends Controller
         return $table;
     }
 
-    public function print( Request $request ) {
+    public function print(Request $request) {
         try {
-            $date = null;
+            $date   = $request->from_date ? Carbon::createFromFormat('d/m/Y', $request->from_date) : null;
 
-            if ( $request->date ) {
-                $date   = Carbon::createFromFormat('d/m/Y', $request->date);
-            }
+            $fromDate   = $request->from_date ? Carbon::createFromFormat('d/m/Y', $request->from_date) : Carbon::now()->startOfMonth();
+            $toDate     = $request->to_date ? Carbon::createFromFormat('d/m/Y', $request->to_date) : Carbon::now()->endOfMonth();
 
-            $datas  = Order::with('orderProducts')
-                ->where(function ( $order ) use ( $date ) {
-                    if ( $date ) {
-                        $order->whereDate('created_at', $date);
+            $datas  = Order::with('province', 'city', 'bill.courier', 'user')->where(function ($order) use ($request) {
+                    if ($request->marketing) {
+                        $order->whereHas('user', function ($query) use ($request) {
+                            if ($request->marketing) {
+                                return $query->where('name', $request->marketing);
+                            }
+                        });
                     }
                 })
-                ->where(function ( $order ) use ( $request ) {
-                    if ( $request->status ) {
-                        $order->where( 'status', $request->status );
+                ->whereBetween('created_at', [$fromDate, $toDate])
+                ->where(function ($order) use ($request) {
+                    if ($request->status) {
+                        return $order->where('status', $request->status);
                     }
+
+                    return $order->where('status', '!=', 'canceled');
                 })
-                ->where('status', '!=', 'canceled')
+                ->orderByDesc('updated_at')
                 ->get();
 
             $pdf    = PDF::loadView('pdfs.order', compact('datas', 'date'));

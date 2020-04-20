@@ -77,17 +77,39 @@
                 <form id="print" action="{{ route('admin.order.print') }}" method="get">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="date">Date</label>
+                            <label for="from_date">From Date</label>
 
-                            <input type="text" name="date" id="date" class="form-control @if ($errors->has('date')) is-invalid @endif" value="{{ old('date') }}" placeholder="DD/MM/YYYY">
+                            <input type="text" name="from_date" id="from_date" class="form-control @if ($errors->has('from_date')) is-invalid @endif" value="{{ old('from_date') }}" placeholder="DD/MM/YYYY">
 
-                            @if ($errors->has('date'))
+                            @if ($errors->has('from_date'))
                                 <div class="invalid-feedback text-center">
-                                    {{$errors->first('date')}}
+                                    {{$errors->first('from_date')}}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="to_date">To Date</label>
+
+                            <input type="text" name="to_date" id="to_date" class="form-control @if ($errors->has('to_date')) is-invalid @endif" value="{{ old('to_date') }}" placeholder="DD/MM/YYYY">
+
+                            @if ($errors->has('to_date'))
+                                <div class="invalid-feedback text-center">
+                                    {{$errors->first('to_date')}}
                                 </div>
                             @endif
                         </div>
                         
+                        <div class="form-group">
+                            <label for="marketing">Marketing</label>
+
+                            <select name="marketing" class="custom-select" id="marketing">
+                                <option value="">Select Marketing</option>
+                                <option value="ryna">Ryna</option>
+                                <option value="partini">Partini</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="status">Status</label>
 

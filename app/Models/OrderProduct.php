@@ -16,10 +16,10 @@ class OrderProduct extends Model
     public $incrementing = false;
 
     public function order() {
-        return $this->belongsTo('App\Models\Order');
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
     public function product() {
-        return $this->belongsTo('App\Models\Product');
+        return $this->belongsTo('App\Models\Product', 'product_id');
     }
 }

@@ -26,7 +26,7 @@ class OrderController extends Controller
         return abort(404);
     }
 
-    public function getSubDistrict( $city, $subdistrict )
+    public function getSubDistrict($city, $subdistrict)
     {
         $curl = curl_init();
 
@@ -40,8 +40,8 @@ class OrderController extends Controller
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
                 "key: " . env('API_KEY_RAJAONGKIR', null)
-            ),
-        ));
+           ),
+       ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
@@ -51,7 +51,7 @@ class OrderController extends Controller
         if ($err) {
             return "cURL Error #:" . $err;
         } else {
-            return json_decode( $response, true );
+            return json_decode($response, true);
         }
     }
 
@@ -77,7 +77,7 @@ class OrderController extends Controller
         ]);
     
         try {
-            if ( Cart::getTotalQuantity() < 100 ) {
+            if (Cart::getTotalQuantity() < 100) {
                 return redirect()->back()->with('info', 'Minimal order 100!');
             }
             
@@ -86,15 +86,15 @@ class OrderController extends Controller
 
             $user = null;
 
-            if ( $request->marketing ) {
+            if ($request->marketing) {
                 $user   = User::where('name', $request->marketing)->first();
 
-                if ( !$user ) {
+                if (!$user) {
                     return redirect()->back()->with('info', 'User marketing not found!');
                 }
             }
             
-            $dataSubDistrict   = $this->getSubDistrict( $request->city, $request->subdistrict );
+            $dataSubDistrict   = $this->getSubDistrict($request->city, $request->subdistrict);
 
             $province   = Province::firstOrCreate([
                 'id'    => $dataSubDistrict['rajaongkir']['results']['province_id'],
@@ -144,7 +144,7 @@ class OrderController extends Controller
         
             $items  = Cart::getContent();
         
-            foreach ( $items as $item ) {
+            foreach ($items as $item) {
                 OrderProduct::create([
                     'id'        => Str::uuid(),
                     'order_id'  => $order->id,
@@ -155,15 +155,15 @@ class OrderController extends Controller
     
             $items  = Cart::clear();
     
-            Mail::to( $order->email )->send( new OrderMail( $order ) );
+            Mail::to($order->email)->send(new OrderMail($order));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     
-        return view( 'pages.guest.order.index', compact('order') );
+        return view('pages.guest.order.index', compact('order'));
     }
 
-    public function getWaybill( $resi, $courier ) {
+    public function getWaybill($resi, $courier) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -178,8 +178,8 @@ class OrderController extends Controller
             CURLOPT_HTTPHEADER => array(
                 "content-type: application/x-www-form-urlencoded",
                 "key: " . env('API_KEY_RAJAONGKIR', null)
-            ),
-        ));
+           ),
+       ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
@@ -193,22 +193,22 @@ class OrderController extends Controller
         }
     }
 
-    public function detail( Request $request )
+    public function detail(Request $request)
     {
-        if ( $request->invoice ) {
-            $order  = Order::where( 'invoice', $request->invoice )->first();
+        if ($request->invoice) {
+            $order  = Order::where('invoice', $request->invoice)->first();
         
             if (!$order) {
-                return redirect( '/order/detail' )->with('info', 'Order not found!');
+                return redirect('/order/detail')->with('info', 'Order not found!');
             }
 
             $wayBill = null;
 
-            if ( $order->bill->courier ) { 
-                $wayBill    = $this->getWaybill( $order->resi, $order->bill->courier->code );
+            if ($order->bill->courier) { 
+                $wayBill    = $this->getWaybill($order->resi, $order->bill->courier->code);
             }
         }
 
-        return view( 'pages.guest.order.detail', compact('order', 'wayBill') );
+        return view('pages.guest.order.detail', compact('order', 'wayBill'));
     }
 }

@@ -16,19 +16,19 @@ class Order extends Model
     public $incrementing = false;
 
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function orderProducts() {
-        return $this->hasMany('App\Models\OrderProduct');
+        return $this->hasMany('App\Models\OrderProduct', 'order_id');
     }
 
     public function orderConfirmation() {
-        return $this->hasOne('App\Models\OrderConfirm');
+        return $this->hasOne('App\Models\OrderConfirm', 'order_id');
     }
 
     public function bill() {
-        return $this->hasOne('App\Models\Bill');
+        return $this->hasOne('App\Models\Bill', 'order_id');
     }
 
     public function province() {

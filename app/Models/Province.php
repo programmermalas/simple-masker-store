@@ -16,6 +16,6 @@ class Province extends Model
     public $incrementing = false;
 
     public function orders() {
-        return $this->hasMany('App\Models\Order');
+        return $this->hasMany('App\Models\Order', 'province_id');
     }
 }

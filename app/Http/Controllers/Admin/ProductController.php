@@ -30,10 +30,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index( Request $request )
+    public function index(Request $request)
     {
         try {
-            $products   = Product::where( 'title', 'LIKE', '%' . $request->search . '%' )
+            $products   = Product::where('title', 'LIKE', '%' . $request->search . '%')
                 ->orderByDesc('created_at')
                 ->get();
         } catch (\Exception $e) {
@@ -82,13 +82,13 @@ class ProductController extends Controller
                 'weight'        => $request->weight
             ]);
 
-            $fileName   = $this->uploadImage( $request->file('image'), $product->title );
+            $fileName   = $this->uploadImage($request->file('image'), $product->title);
 
             $product->productImage()->create([
                 'id'            => Str::uuid(),
                 'product_id'    => $product->id,
                 'name'          => $fileName,
-                'dimentions'    => implode( '|', $this->dimentions ),
+                'dimentions'    => implode('|', $this->dimentions),
                 'path'          => $this->path
             ]);
         } catch (\Exception $e) {
@@ -150,8 +150,8 @@ class ProductController extends Controller
             ]);
 
             
-            if ( $request->hasFile('image') ) {
-                $fileName   = $this->uploadImage( $request->file('image'), $product->title );
+            if ($request->hasFile('image')) {
+                $fileName   = $this->uploadImage($request->file('image'), $product->title);
 
                 $product->productImage()->updateOrCreate([
                     'product_id'    => $product->id,
@@ -185,19 +185,19 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')->with('warning', "Product $product->title destroyed!");
     }
 
-    public function table( Request $request ) {
+    public function table(Request $request) {
         $data   = Product::orderByDesc('created_at')
             ->get();
 
         $table  = Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('price', function ( $product ) {
-                return 'Rp ' . number_format( $product->price, 0, '.', ',' );
+            ->addColumn('price', function ($product) {
+                return 'Rp ' . number_format($product->price, 0, '.', ',');
             })
-            ->addColumn('date', function ( $product ) {
+            ->addColumn('date', function ($product) {
                 return $product->created_at->diffForHumans();
             })
-            ->addColumn('action', function( $product ) {
+            ->addColumn('action', function($product) {
                     $btn = '
                         <a href="' . route('admin.product.edit', $product->id) . '" class="btn btn-sm btn-primary rounded-circle">
                             <i class="fas fa-edit"></i>
@@ -207,7 +207,7 @@ class ProductController extends Controller
                             <i class="fas fa-eye"></i>
                         </a>
 
-                        <a href="' . route( 'admin.product.destroy', $product->id ) . '" class="btn btn-sm btn-danger rounded-circle">
+                        <a href="' . route('admin.product.destroy', $product->id) . '" class="btn btn-sm btn-danger rounded-circle">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     ';

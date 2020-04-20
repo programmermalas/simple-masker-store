@@ -10,14 +10,14 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function detail( $slug ) {
-        $product    = Product::where( 'slug', $slug )->first();
+    public function detail($slug) {
+        $product    = Product::where('slug', $slug)->first();
 
-        return view( 'pages.guest.product.detail', compact('product') );
+        return view('pages.guest.product.detail', compact('product'));
     }
 
-    public function store( Request $request, $slug ) {
-        $product    = Product::where( 'slug', $slug )->first();
+    public function store(Request $request, $slug) {
+        $product    = Product::where('slug', $slug)->first();
 
         Cart::add(array(
             'id'            => $product->id,

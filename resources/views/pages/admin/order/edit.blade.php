@@ -8,7 +8,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    Add Product
+                    Edit Order ({{$order->invoice}})
                 </div>
 
                 <form action="{{ route('admin.order.update', $order->id) }}" method="POST">
@@ -73,6 +73,24 @@
                                     {{$errors->first('status')}}
                                 </div>
                             @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="total">Total</label>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="total">Rp</span>
+                                </div>
+
+                                <input name="total" type="text" class="form-control @if ($errors->has('total')) is-invalid @endif" value="{{ $order->bill->total }}" aria-describedby="total">
+
+                                @if ($errors->has('total'))
+                                    <div class="invalid-feedback">
+                                        {{$errors->first('total')}}
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     
