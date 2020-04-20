@@ -196,7 +196,8 @@
 
         $('#print').validate({
             rules: {
-                date: { dateFormat: true },
+                from_date: { dateFormat: true },
+                to_date: { dateFormat: true },
             }
         });
     });
