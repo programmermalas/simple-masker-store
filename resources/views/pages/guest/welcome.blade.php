@@ -68,7 +68,7 @@
                 <a href="{{ url("/product/{$product->slug}") }}" class="text-decoration-none text-reset">
                     <div class="py-3">
                         <div class="d-flex justify-content-center align-items-center" style="height: 240px; overflow: hidden;">
-                            <img src="/storage/images/300/'{{$product->productImage->name}}" style="background-size: cover; background-repeat: no-repeat;" alt="{{ $product->productImage->name }}">
+                            <img src="/storage/images/300/{{$product->productImage->name}}" style="background-size: cover; background-repeat: no-repeat;" alt="{{ $product->productImage->name }}">
                         </div>
                     </div>
 
