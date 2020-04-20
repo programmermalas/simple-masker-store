@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $products   = App\Models\Product::with('productImage')->get();
+    $products   = App\Models\Product::get();
 
     return view('pages.guest.welcome', compact('products'));
 });

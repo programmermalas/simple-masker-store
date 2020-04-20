@@ -40,8 +40,8 @@ class OrderController extends Controller
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
                 "key: " . env('API_KEY_RAJAONGKIR', null)
-           ),
-       ));
+            ),
+        ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
