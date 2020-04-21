@@ -28,21 +28,70 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="price">Price</label>
+                            <label for="price_a">Price A</label>
 
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="price">Rp</span>
+                                    <span class="input-group-text" id="price_a">Rp</span>
                                 </div>
 
-                                <input name="price" type="text" class="form-control @if ($errors->has('price')) is-invalid @endif" value="{{ old('price') }}" placeholder="5.000" aria-label="5.000" aria-describedby="price">
+                                <input name="price_a" type="text" class="form-control @if ($errors->has('price_a')) is-invalid @endif" value="{{ old('price_a') }}" placeholder="5.000" aria-label="5.000" aria-describedby="price_a">
 
-                                @if ($errors->has('price'))
+                                @if ($errors->has('price_a'))
                                     <div class="invalid-feedback">
-                                        {{$errors->first('price')}}
+                                        {{$errors->first('price_a')}}
                                     </div>
                                 @endif
                             </div>
+
+                            <small id="priceAInline" class="text-muted">
+                                Order > 50
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price_b">Price B</label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="price_b">Rp</span>
+                                </div>
+
+                                <input name="price_b" type="text" class="form-control @if ($errors->has('price_b')) is-invalid @endif" value="{{ old('price_b') }}" placeholder="6.000" aria-label="5.000" aria-describedby="price_b">
+
+                                @if ($errors->has('price_b'))
+                                    <div class="invalid-feedback">
+                                        {{$errors->first('price_b')}}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <small id="priceBInline" class="text-muted">
+                                Order > 100
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price_c">Price C</label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="price_c">Rp</span>
+                                </div>
+
+                                <input name="price_c" type="text" class="form-control @if ($errors->has('price_c')) is-invalid @endif" value="{{ old('price_c') }}" placeholder="7.000" aria-label="5.000" aria-describedby="price_c">
+
+                                
+                                @if ($errors->has('price_c'))
+                                <div class="invalid-feedback">
+                                    {{$errors->first('price_c')}}
+                                </div>
+                                @endif
+                            </div>
+                            
+                            <small id="priceCInline" class="text-muted">
+                                Order > 1000
+                            </small>
                         </div>
 
                         <div class="form-group">

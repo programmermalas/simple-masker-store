@@ -39,7 +39,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Price A</th>
+                                <th scope="col">Price B</th>
+                                <th scope="col">Price C</th>
                                 <th scope="col">Stock</th>
                                 <th scope="col">Date</th>
                                 <th class="text-center" scope="col">Action</th>
@@ -62,14 +64,16 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'title', name: 'title'},
-                {data: 'price', name: 'price'},
+                {data: 'price_a', name: 'price_a'},
+                {data: 'price_b', name: 'price_b'},
+                {data: 'price_c', name: 'price_c'},
                 {data: 'stock', name: 'stock'},
                 {data: 'date', name: 'date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
                 {
-                    targets: [0, 2, 3, 4, 5], 
+                    targets: [0, 2, 3, 4, 5, 6, 7], 
                     className: 'text-center align-middle no-wrap'
                 },
                 {

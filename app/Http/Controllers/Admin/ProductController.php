@@ -63,7 +63,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'title'         => 'required|max:100',
-            'price'         => 'required|numeric',
+            'price_a'       => 'required|numeric',
+            'price_b'       => 'required|numeric',
+            'price_c'       => 'required|numeric',
             'stock'         => 'required|numeric',
             'description'   => 'required',
             'weight'        => 'required',
@@ -76,7 +78,9 @@ class ProductController extends Controller
                 'user_id'       => Auth::id(),
                 'title'         => $request->title,
                 'slug'          => Str::slug($request->title, '-'),
-                'price'         => $request->price,
+                'price_a'       => $request->price_a,
+                'price_b'       => $request->price_b,
+                'price_c'       => $request->price_c,
                 'stock'         => $request->stock,
                 'description'   => $request->description,
                 'weight'        => $request->weight
@@ -131,7 +135,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'title'         => 'required|max:100',
-            'price'         => 'required|numeric',
+            'price_a'       => 'required|numeric',
+            'price_b'       => 'required|numeric',
+            'price_c'       => 'required|numeric',
             'stock'         => 'required|numeric',
             'description'   => 'required',
             'weight'        => 'required',
@@ -143,7 +149,9 @@ class ProductController extends Controller
                 'user_id'       => Auth::id(),
                 'title'         => $request->title,
                 'slug'          => Str::slug($request->title, '-'),
-                'price'         => $request->price,
+                'price_a'       => $request->price_a,
+                'price_b'       => $request->price_b,
+                'price_c'       => $request->price_c,
                 'stock'         => $request->stock,
                 'description'   => $request->description,
                 'weight'        => $request->weight
@@ -191,8 +199,14 @@ class ProductController extends Controller
 
         $table  = Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('price', function ($product) {
-                return 'Rp ' . number_format($product->price, 0, '.', ',');
+            ->addColumn('price_a', function ($product) {
+                return 'Rp ' . number_format($product->price_a, 0, '.', ',');
+            })
+            ->addColumn('price_b', function ($product) {
+                return 'Rp ' . number_format($product->price_b, 0, '.', ',');
+            })
+            ->addColumn('price_c', function ($product) {
+                return 'Rp ' . number_format($product->price_c, 0, '.', ',');
             })
             ->addColumn('date', function ($product) {
                 return $product->created_at->diffForHumans();
