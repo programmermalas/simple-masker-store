@@ -48,7 +48,7 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $order  = Order::with('orderProducts.product')->where('id', $request->id)->first();
+            $order  = Order::where('id', $request->id)->first();
 
             if ($order->status == 'paid') {
                 return redirect()->back()->with('info', 'Payment already paid!');
