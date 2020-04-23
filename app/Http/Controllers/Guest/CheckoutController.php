@@ -9,8 +9,8 @@ use Cart;
 class CheckoutController extends Controller
 {
     public function index() {
-        if (Cart::getTotalQuantity() < 100) {
-            return redirect()->back()->with('info', 'Minimal order 100!');
+        if (Cart::getTotalQuantity() < 50) {
+            return redirect()->back()->with('info', 'Minimal order 50!');
         }
 
         $carts  = Cart::getContent();

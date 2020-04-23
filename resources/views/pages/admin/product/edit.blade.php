@@ -36,7 +36,7 @@
                                     <span class="input-group-text" id="price_a">Rp</span>
                                 </div>
 
-                                <input name="price_a" type="text" class="form-control @if ($errors->has('price_a')) is-invalid @endif" value="{{ old('price_a') }}" placeholder="5.000" aria-label="5.000" aria-describedby="price_a">
+                                <input name="price_a" type="text" class="form-control @if ($errors->has('price_a')) is-invalid @endif" value="{{ old('price_a') ?? $product->price_a }}" placeholder="5.000" aria-label="5.000" aria-describedby="price_a">
 
                                 @if ($errors->has('price_a'))
                                     <div class="invalid-feedback">
@@ -58,7 +58,7 @@
                                     <span class="input-group-text" id="price_b">Rp</span>
                                 </div>
 
-                                <input name="price_b" type="text" class="form-control @if ($errors->has('price_b')) is-invalid @endif" value="{{ old('price_b') }}" placeholder="6.000" aria-label="5.000" aria-describedby="price_b">
+                                <input name="price_b" type="text" class="form-control @if ($errors->has('price_b')) is-invalid @endif" value="{{ old('price_b') ?? $product->price_b }}" placeholder="6.000" aria-label="5.000" aria-describedby="price_b">
 
                                 @if ($errors->has('price_b'))
                                     <div class="invalid-feedback">
@@ -80,7 +80,7 @@
                                     <span class="input-group-text" id="price_c">Rp</span>
                                 </div>
 
-                                <input name="price_c" type="text" class="form-control @if ($errors->has('price_c')) is-invalid @endif" value="{{ old('price_c') }}" placeholder="7.000" aria-label="5.000" aria-describedby="price_c">
+                                <input name="price_c" type="text" class="form-control @if ($errors->has('price_c')) is-invalid @endif" value="{{ old('price_c') ?? $product->price_c }}" placeholder="7.000" aria-label="5.000" aria-describedby="price_c">
 
                                 
                                 @if ($errors->has('price_c'))

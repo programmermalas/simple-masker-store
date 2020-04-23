@@ -69,11 +69,6 @@
                     </tr>
 
                     <tr>
-                        <td>Sub Total</td>
-                        <td>Rp {{ number_format( \Cart::getSubTotal(), 0, ',', '.' ) }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Total</td>
                         <td>Rp {{ number_format( \Cart::getTotal(), 0, ',', '.' ) }}</td>
                     </tr>

@@ -186,22 +186,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="marketing">Marketing</label>
-
-                    <input name="marketing" type="text" class="form-control @if ($errors->has('marketing')) is-invalid @endif" id="marketing" aria-describedby="marketing" value="{{ old('marketing') }}">
-
-                    <small id="recipientsNameInline" class="text-muted">
-                        If you are marketing *Optional
-                    </small>
-
-                    @if ($errors->has('marketing'))
-                        <div class="invalid-feedback">
-                            {{$errors->first('marketing')}}
-                        </div>
-                    @endif
-                </div>
             </div>
 
             <div class="col-sm-12 col-md-4 pt-3 pt-md-0">
@@ -223,19 +207,18 @@
                             <td>Weight</td>
                             <td>
                                 <span id="weight">{{ $weight / 1000 }}</span> Kg
-                                <input type="hidden" name="weight" value="{{ $weight }}">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Shipping</td>
-                            <td>Rp <input type="hidden" name="shipping"><span id="shipping">0</span></td>
+                            <td>Rp <span id="shipping">0</span></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td>Total</td>
-                            <td>Rp <input type="hidden" name="total"><span id="total">{{ \Cart::getTotal() }}</span></td>
+                            <td>Rp <span id="total">{{ \Cart::getTotal() }}</span></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -255,7 +238,6 @@
         $('select[name="price_service"]').prop('disabled', true);
 
         let total = $('#total').html();
-        $('input[name="total"]').val( total );
         $('#total').html( new Intl.NumberFormat('ja-JP').format( total ) );
 
         $.get('/api/provinces', function ( data ) {
@@ -346,7 +328,7 @@
             if ( $(this).val() !== 'null' ) {
                 $('input[name="name_courier"]').val($('select[name="code_courier"] option:selected').text());
 
-                $.get('/api/cost/' + subdistrict + '/' + $('input[name="weight"]').val() + '/' + $(this).val(), function ( data ) {
+                $.get('/api/cost/' + subdistrict + '/' + (parseFloat($('#weight').html()) * 1000) + '/' + $(this).val(), function ( data ) {
                     if (data.rajaongkir.results) {
                         $('select[name="price_service"]').prop('disabled', false);
                         $.map( data.rajaongkir.results, function ( value, index ) {
@@ -375,9 +357,7 @@
             totals = parseInt( total ) + parseInt( shipping );
 
             $('#shipping').html( new Intl.NumberFormat('ja-JP').format( shipping ) );
-            $('input[name="shipping"]').val( shipping );
             $('#total').html( new Intl.NumberFormat('ja-JP').format( totals ) );
-            $('input[name="total"]').val( totals );
         });
     });
 </script>

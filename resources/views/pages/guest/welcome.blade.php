@@ -76,7 +76,7 @@
                         <h6 class="card-title">{{ $product->title }}</h6>
 
                         <div class="card-text">
-                            <span>Rp {{ number_format( $product->price, 0, '.', ',' ) }}</span> <br>
+                            <span>Rp {{ number_format( $product->price_a, 0, '.', ',' ) }}</span> <br>
                             <span>Stock: {{ number_format( $product->stock, 0, '.', ',' ) }}</span>
                         </div>
                     </div>

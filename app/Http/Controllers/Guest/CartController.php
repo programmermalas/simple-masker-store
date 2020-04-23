@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Cart;
 
+use App\Models\Product;
+
 class CartController extends Controller
 {
     public function index() {
@@ -20,8 +22,22 @@ class CartController extends Controller
         }
 
         foreach ($request->ids as $key => $id) {
-            Cart::update($id, [
-                'quantity' => [
+            $product    = Product::findOrFail($id);
+
+            $price      = 0;
+            $quantity   = (int) $request->quantities[$key];
+
+            if ($quantity >= 50 && $quantity < 100) {
+                $price  = $product->price_a;
+            } elseif ($quantity >= 100 && $quantity < 1000) {
+                $price  = $product->price_b;
+            } elseif ($quantity >= 1000) {
+                $price  = $product->price_c;
+            }
+
+            Cart::update($product->id, [
+                'price'     => $price,
+                'quantity'  => [
                     'relative'  => false,
                     'value'     => $request->quantities[$key]
                 ]

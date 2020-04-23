@@ -19,15 +19,31 @@ class ProductController extends Controller
     public function store(Request $request, $slug) {
         $product    = Product::where('slug', $slug)->first();
 
-        Cart::add(array(
+        $cart       = Cart::get($product->id);
+        $price      = 0;
+        $quantity   = $request->quantity;
+
+        if ($cart) {
+            $quantity   = $cart->quantity + $request->quantity;
+        }
+
+        if ($quantity >= 1000) {
+            $price  = $product->price_c;
+        } elseif ($quantity >= 100 && $quantity < 1000) {
+            $price  = $product->price_b;
+        } else {
+            $price  = $product->price_a;
+        }
+
+        Cart::add([
             'id'            => $product->id,
             'name'          => $product->title,
-            'price'         => $product->price,
+            'price'         => $price,
             'quantity'      => $request->quantity,
             'attributes'    => [
                 'weight'    => $product->weight
             ]
-        ));
+        ]);
 
         return redirect()->back()->with('success', 'Item added to cart');
     }

@@ -71,14 +71,11 @@ class OrderController extends Controller
             'postcode'      => 'required|max:10',
             'phone'         => 'required|max:15',
             'email'         => 'required|email',
-            'shipping'      => 'required',
-            'weight'        => 'required',
-            'total'         => 'required'
         ]);
     
         try {
-            if (Cart::getTotalQuantity() < 100) {
-                return redirect()->back()->with('info', 'Minimal order 100!');
+            if (Cart::getTotalQuantity() < 50) {
+                return redirect()->back()->with('info', 'Minimal order 50!');
             }
             
             $count      = Order::withTrashed()->count();
@@ -86,14 +83,6 @@ class OrderController extends Controller
 
             $user = null;
 
-            if ($request->marketing) {
-                $user   = User::where('name', $request->marketing)->first();
-
-                if (!$user) {
-                    return redirect()->back()->with('info', 'User marketing not found!');
-                }
-            }
-            
             $dataSubDistrict   = $this->getSubDistrict($request->city, $request->subdistrict);
 
             $province   = Province::firstOrCreate([
@@ -119,7 +108,6 @@ class OrderController extends Controller
 
             $order = Order::create([
                 'id'            => Str::uuid(),
-                'user_id'       => $user ? $user->id : null,
                 'invoice'       => $invoice,
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
@@ -133,15 +121,6 @@ class OrderController extends Controller
                 'email'         => $request->email,
             ]);
         
-            Bill::create([
-                'id'        => Str::uuid(),
-                'order_id'  => $order->id,
-                'courier_id'=> $courier->id,
-                'shipping'  => $request->shipping,
-                'weight'    => $request->weight,
-                'total'     => $request->total
-            ]);
-        
             $items  = Cart::getContent();
         
             foreach ($items as $item) {
@@ -152,6 +131,17 @@ class OrderController extends Controller
                     'quantity'  => $item->quantity
                 ]);
             }
+
+            $shipping = $order->cost($courier->code, $courier->service);
+
+            Bill::create([
+                'id'        => Str::uuid(),
+                'order_id'  => $order->id,
+                'courier_id'=> $courier->id,
+                'shipping'  => $order->cost($courier->code, $courier->service),
+                'weight'    => $order->weight(),
+                'total'     => $order->total() + $shipping
+            ]);
     
             $items  = Cart::clear();
     

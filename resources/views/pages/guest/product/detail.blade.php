@@ -28,7 +28,24 @@
                     
                     <li class="list-group-item bg-light">Weight: {{ $product->weight }} Gram</li>
 
-                    <li class="list-group-item bg-light">Rp {{ number_format( $product->price, 0, '.', ',' ) }}</li>
+                    <li class="list-group-item bg-light">
+                        <table class="w-100">
+                            <tr>
+                                <td>Order > 50</td>
+                                <td class="text-right">Rp {{ number_format( $product->price_a, 0, '.', ',' ) }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Order > 100</td>
+                                <td class="text-right">Rp {{ number_format( $product->price_b, 0, '.', ',' ) }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Order > 1000</td>
+                                <td class="text-right">Rp {{ number_format( $product->price_c, 0, '.', ',' ) }}</td>
+                            </tr>
+                        </table>
+                    </li>
                     @if ( $product->stock <= 0 )
                     <li class="list-group-item bg-light">
                         <div class="card-text text-center text-muted">

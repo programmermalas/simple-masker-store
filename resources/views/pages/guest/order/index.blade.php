@@ -24,9 +24,9 @@
                     <tr>
                         <th scope="row">{{ ++$no }}</th>
                         <td>{{ $orderProduct->product->title }}</td>
-                        <td>Rp {{ number_format( $orderProduct->product->price, 0, '.', ',' ) }}</td>
+                        <td>Rp {{ number_format( $orderProduct->price(), 0, '.', ',' ) }}</td>
                         <td>{{ $orderProduct->quantity }}</td>
-                        <td>{{ number_format( $orderProduct->quantity * $orderProduct->product->price, 0, '.', ',' ) }}</td>
+                        <td>{{ number_format( $orderProduct->total(), 0, '.', ',' ) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
