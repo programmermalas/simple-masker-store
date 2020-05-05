@@ -74,8 +74,8 @@ class OrderController extends Controller
         ]);
     
         try {
-            if (Cart::getTotalQuantity() < 50) {
-                return redirect()->back()->with('info', 'Minimal order 50!');
+            if (Cart::getTotalQuantity() < 10) {
+                return redirect()->back()->with('info', 'Minimal order 10!');
             }
             
             $count      = Order::withTrashed()->count();
