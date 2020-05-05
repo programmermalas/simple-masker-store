@@ -58,7 +58,7 @@
                             <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
 
                             <div class="col-sm-10">
-                                <input name="quantity" type="number" class="form-control @if ($errors->has('quantity')) is-invalid @endif" id="quantity" min="5" step="5" value="{{ old('quantity') ?? '5' }}">
+                                <input name="quantity" type="number" class="form-control @if ($errors->has('quantity')) is-invalid @endif" id="quantity" min="1" step="1" value="{{ old('quantity') ?? '1' }}">
 
                                 @if ($errors->has('quantity'))
                                     <div class="invalid-feedback">
